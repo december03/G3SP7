@@ -1,0 +1,18 @@
+{
+	"Music": [
+	],
+
+	"Ambience": [
+	],
+
+	"SFX": [
+	],
+
+	"UI": [
+		{"Path": "buttonclick.wav"}
+	],
+
+	"VoiceLine": [
+		
+	]
+}
