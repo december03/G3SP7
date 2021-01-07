@@ -5,11 +5,8 @@
 #include "Observer.h"
 #include "PostMaster.h"
 
-class CTokenPool;
-class CCanvas;
 class CGameObject;
 class CMouseSelection;
-class CColliderPushManager;
 
 class CInGameState : public CState, public IInputObserver, public IStringObserver, public IObserver
 {
@@ -27,9 +24,5 @@ public:
 	void Receive(const SMessage& aMessage) override;
 
 private:
-	CCanvas* myCanvas;
-	CTokenPool* myTokenPool;
-	CMouseSelection* mySelection;
-	CColliderPushManager* myColliderPusher;
 	bool myExitLevel;
 };

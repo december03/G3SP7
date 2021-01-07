@@ -160,5 +160,6 @@ private:
 #ifdef  _DEBUG
 private:
 	bool myShouldRenderLineInstance;
+	CLineInstance* myGrid;
 #endif //  _DEBUG
 };

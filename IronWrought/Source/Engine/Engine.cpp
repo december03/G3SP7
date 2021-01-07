@@ -41,7 +41,6 @@ CEngine::CEngine() : myRenderSceneActive(true)
 {
 	ourInstance = this;
 
-	myScene = new CScene();
 	myTimer = new CTimer();
 	myWindowHandler = new CWindowHandler();
 	myFramework = new CDirectXFramework();
@@ -67,8 +66,6 @@ CEngine::CEngine() : myRenderSceneActive(true)
 
 CEngine::~CEngine()
 {
-	delete myScene;
-	myScene = nullptr;
 	delete myWindowHandler;
 	myWindowHandler = nullptr;
 	delete myFramework;
@@ -129,7 +126,6 @@ bool CEngine::Init(CWindowHandler::SWindowData& someWindowData)
 	myWindowHandler->SetInternalResolution();
 	ENGINE_ERROR_BOOL_MESSAGE(myModelFactory->Init(*this), "Model Factory could not be initiliazed.");
 	ENGINE_ERROR_BOOL_MESSAGE(myCameraFactory->Init(myWindowHandler), "Camera Factory could not be initialized.");
-	ENGINE_ERROR_BOOL_MESSAGE(myScene->Init(), "Scene could not be initialized.");
 	myRenderManager = new CRenderManager();
 	ENGINE_ERROR_BOOL_MESSAGE(myRenderManager->Init(myFramework, myWindowHandler), "RenderManager could not be initialized.");
 	ENGINE_ERROR_BOOL_MESSAGE(myLightFactory->Init(*this), "Light Factory could not be initialized.");

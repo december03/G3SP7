@@ -41,11 +41,11 @@ void CGame::InitDev()
 {
 	myStateStack.Awake(
 		{
-			CStateStack::EState::LoadLevel,
+			//CStateStack::EState::LoadLevel,
 			CStateStack::EState::InGame,
 			CStateStack::EState::PauseMenu
 		},
-		CStateStack::EState::LoadLevel);
+		CStateStack::EState::InGame);
 }
 
 void CGame::InitRealGame()

@@ -44,7 +44,7 @@ bool CWindowHandler::Init(CWindowHandler::SWindowData someWindowData)
 {
     myWindowData = someWindowData;
     
-    rapidjson::Document document = CJsonReader::LoadDocument("Json/WindowSettings.json");
+    rapidjson::Document document = CJsonReader::LoadDocument("Json/Settings/WindowSettings.json");
  
     if (document.HasMember("Window Width"))
         myWindowData.myWidth = document["Window Width"].GetInt();
@@ -91,16 +91,16 @@ bool CWindowHandler::Init(CWindowHandler::SWindowData someWindowData)
     }
 
     // Start in bordered window
-    //myWindowHandle = CreateWindowA("3DEngine", gameName.c_str(),
-    //    WS_OVERLAPPEDWINDOW | WS_POPUP | WS_VISIBLE,
-    //    myWindowData.myX, myWindowData.myY, myWindowData.myWidth, myWindowData.myHeight,
-    //    nullptr, nullptr, nullptr, this);
+    myWindowHandle = CreateWindowA("3DEngine", gameName.c_str(),
+        WS_OVERLAPPEDWINDOW | WS_POPUP | WS_VISIBLE,
+        myWindowData.myX, myWindowData.myY, myWindowData.myWidth, myWindowData.myHeight,
+        nullptr, nullptr, nullptr, this);
 
     // Start in fullscreen
-    myWindowHandle = CreateWindowA("3DEngine", gameName.c_str(), 
-        WS_POPUP | WS_VISIBLE,
-        0, 0, /*GetSystemMetrics(SM_CXSCREEN)*/1920, /*GetSystemMetrics(SM_CYSCREEN)*/1080,
-        NULL, NULL, GetModuleHandle(nullptr), this);
+    //myWindowHandle = CreateWindowA("3DEngine", gameName.c_str(), 
+    //    WS_POPUP | WS_VISIBLE,
+    //    0, 0, /*GetSystemMetrics(SM_CXSCREEN)*/1920, /*GetSystemMetrics(SM_CYSCREEN)*/1080,
+    //    NULL, NULL, GetModuleHandle(nullptr), this);
 
     myResolution = new Vector2();
     return true;

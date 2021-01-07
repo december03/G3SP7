@@ -73,7 +73,6 @@ private:
 	CDirectXFramework* myFramework;
 	CForwardRenderer* myForwardRenderer;
 	CRenderManager* myRenderManager;
-	CScene* myScene;
 	CTimer* myTimer;
 	CDebug* myDebug;
 

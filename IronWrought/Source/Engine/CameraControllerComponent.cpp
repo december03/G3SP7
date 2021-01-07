@@ -38,7 +38,7 @@ void CCameraControllerComponent::Update()
 {
 #ifdef  _DEBUG
 	if (Input::GetInstance()->IsKeyPressed(std::toupper(myToggleFreeCam))) {
-		myCameraMode = myCameraMode == ECameraMode::FreeCam ? ECameraMode::Player : ECameraMode::FreeCam;
+		//myCameraMode = myCameraMode == ECameraMode::FreeCam ? ECameraMode::Player : ECameraMode::FreeCam;
 	}
 #endif
 	if (myCameraMode == ECameraMode::MenuCam) {

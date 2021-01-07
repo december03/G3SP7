@@ -43,14 +43,19 @@ CScene::CScene()
 	, myBoss(nullptr)
 {
 
-#ifdef _DEBUG
-	myShouldRenderLineInstance = true;
-#endif
+
 	myModelsToOutline.resize(2);
 	for (unsigned int i = 0; i < myModelsToOutline.size(); ++i)
 	{
 		myModelsToOutline[i] = nullptr;
 	}
+
+#ifdef _DEBUG
+	myShouldRenderLineInstance = true;
+	myGrid = new CLineInstance();
+	myGrid->Init(CLineFactory::GetInstance()->CreateGrid({ 0.1f, 0.5f, 1.0f, 1.0f }));
+	this->AddInstance(myGrid);
+#endif
 }
 
 CScene::~CScene()
@@ -60,7 +65,6 @@ CScene::~CScene()
 
 	//delete myCollisionManager;
 	//myCollisionManager = nullptr;
-
 
 	delete myEnvironmentLight;
 	myEnvironmentLight = nullptr;
@@ -81,6 +85,11 @@ CScene::~CScene()
 		delete myEnemyBehavior;
 		myEnemyBehavior = nullptr;
 	}
+
+#ifdef _DEBUG
+	myGrid = nullptr;
+	delete myGrid;
+#endif
 
 	if (myNavMesh)// Any CScene that is not InGame's scene will not hold a NavMesh
 	{
