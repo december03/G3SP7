@@ -27,7 +27,7 @@ CFMod::CFMod()
 CFMod::~CFMod()
 {
     myCoreSystem->release();
-    myStudioSystem->release();
+   // myStudioSystem->release();
 }
 
 const FMOD::Studio::System* CFMod::GetStudioSystem() const
