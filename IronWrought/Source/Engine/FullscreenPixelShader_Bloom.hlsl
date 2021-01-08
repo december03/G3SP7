@@ -20,12 +20,12 @@ PixelOutput main(VertexToPixel input) {
 	
 	//Snippet 3
 	//{
-	//float luminance = dot(resource, float3(0.2126f, 0.7152f, 0.0722f));
-	//resource2 *= (1.0f - luminance);
-	//returnValue.myColor.rgb = resource + resource2;
+	//	float luminance = dot(resource, float3(0.2126f, 0.7152f, 0.0722f));
+	//	resource2 *= (1.0f - luminance);
+	//	returnValue.myColor.rgb = resource + resource2;
 	//}
 	//Snippet 3
 	
-	returnValue.myColor.a = 1.0f;
+	returnValue.myColor.a = 0.0f;
 	return returnValue;
 };

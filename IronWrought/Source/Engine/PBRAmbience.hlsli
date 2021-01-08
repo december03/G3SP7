@@ -65,9 +65,63 @@ float ApproximateSpecularSelfOcclusion(float3 vR, float3 vertNormalNormalized)
     rimmask *= rimmask;
     return rimmask;
 }
+// FROM TGA MODELVIEWER
+float2 polarToCartesian(float polar, float2 vec)
+{
+    float2 vecOut;
+    vecOut.x = length(vec) * sin(polar);
+    vecOut.y = length(vec) * cos(polar);
+    return vecOut;
+}
 
+float cartesianToPolar(float2 vec)
+{
+    return atan2(vec.x, vec.y);
+}
+// ! FROM TGA MODELVIEWER
 float3 EvaluateAmbience(TextureCube lysBurleyCube, float3 vN, float3 org_normal, float3 to_cam, float perceptualRoughness, float metalness, float3 albledo, float ao, float3 dfcol, float3 spccol)
 {
+    float3 nvN = vN;
+    normalize(vN);
+    float3 norg_normal = org_normal;
+    normalize(org_normal);
+    
+    int numMips = GetNumMips(lysBurleyCube);
+    const int nrBrdfMips = numMips - nMipOffset;
+    float VdotN = clamp(dot(to_cam, nvN), 0.0, 1.0f);
+    const float3 vRorg = 2 * nvN * VdotN - to_cam;
+
+    float3 vR = GetSpecularDominantDir(nvN, vRorg, RoughnessFromPerceptualRoughness(perceptualRoughness));
+    float RdotNsat = saturate(dot(nvN, vR));
+
+    float l = BurleyToMip(perceptualRoughness, numMips, RdotNsat);
+
+    // TGA modelviewer
+    float myCubeMapYRotation = 0.0f;
+    float2 rotatedVN = polarToCartesian(cartesianToPolar(vN.xz) + myCubeMapYRotation, vN.xz);
+    float3 reflectVector = reflect(-float3(to_cam.x, to_cam.y, to_cam.z), vN);
+    float2 rotatedReflectVector = polarToCartesian(cartesianToPolar(reflectVector.xz) + myCubeMapYRotation, reflectVector.xz);
+    float3 specRad = lysBurleyCube.SampleLevel(defaultSampler, float3(rotatedReflectVector.x, reflectVector.y, rotatedReflectVector.y), l).xyz;
+    float3 diffRad = lysBurleyCube.SampleLevel(defaultSampler, float3(rotatedVN.x, vN.y, rotatedVN.y), (float) (nrBrdfMips - 1)).xyz;
+    // ! TGA modelviewer
+    
+    //float3 specRad = lysBurleyCube.SampleLevel(defaultSampler, vR, l).xyz;
+    //float3 diffRad = lysBurleyCube.SampleLevel(defaultSampler, nvN, (float) (nrBrdfMips - 1)).xyz;
+
+    float fT = 1.0 - RdotNsat;
+    float fT5 = fT * fT;
+    fT5 = fT5 * fT5 * fT;
+    spccol = lerp(spccol, (float3) 1.0, fT5);
+
+    float fFade = GetReductionInMicrofacets(perceptualRoughness);
+    fFade *= EmpiricalSpecularAO(ao, perceptualRoughness);
+    fFade *= ApproximateSpecularSelfOcclusion(vR, norg_normal);
+
+    float3 ambientDiffuse = ao * dfcol * diffRad;
+    float3 ambientSpecular = fFade * spccol * specRad;
+    return ambientDiffuse + ambientSpecular;
+    
+    /*
 	int numMips = GetNumMips(lysBurleyCube);
 	const int nrBrdfMips = numMips - nMipOffset;
 	float VdotN = clamp(dot(to_cam, vN), 0.0, 1.0f);
@@ -93,4 +147,5 @@ float3 EvaluateAmbience(TextureCube lysBurleyCube, float3 vN, float3 org_normal,
 	float3 ambientDiffuse = ao * dfcol * diffRad;
 	float3 ambientSpecular = fFade * spccol * specRad;
 	return ambientDiffuse + ambientSpecular;
+    */
 }

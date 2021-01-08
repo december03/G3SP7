@@ -54,8 +54,8 @@ void CInGameState::Start()
 
 	CGameObject* envLight = new CGameObject(1);
 	envLight->AddComponent<CEnviromentLightComponent>(*envLight);
-	envLight->GetComponent<CEnviromentLightComponent>()->GetEnviromentLight()->SetIntensity(10.f);
-	envLight->GetComponent<CEnviromentLightComponent>()->GetEnviromentLight()->SetDirection({0.0f,1.0f,-1.0f});
+	envLight->GetComponent<CEnviromentLightComponent>()->GetEnviromentLight()->SetIntensity(1.f);
+	envLight->GetComponent<CEnviromentLightComponent>()->GetEnviromentLight()->SetDirection({0.0f,0.0f,-1.0f});
 	scene->AddInstance(envLight);
 	scene->SetEnvironmentLight(envLight->GetComponent<CEnviromentLightComponent>()->GetEnviromentLight());
 

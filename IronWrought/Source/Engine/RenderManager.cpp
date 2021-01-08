@@ -17,7 +17,7 @@
 #include <algorithm>
 
 CRenderManager::CRenderManager() /*: myScene(*CScene::GetInstance())*/
-	: myUseBloom(true)
+	: myUseBloom(false)
 	, myClearColor(0.8f, 0.5f, 0.5f, 1.0f)
 {
 }

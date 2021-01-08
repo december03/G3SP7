@@ -40,7 +40,8 @@ PixelOutPut main(VertexToPixel input)
     float ambientocclusion = PixelShader_AmbientOcclusion(input).myColor.b;
     float metalness = PixelShader_Metalness(input).myColor.r;
     float perceptualroughness = PixelShader_PerceptualRoughness(input).myColor.g;
-    float emissivedata = PixelShader_Emissive(input).myColor.r;
+    perceptualroughness = pow(abs(perceptualroughness), 1.0f / 1.1f); // from tga modelviewer // To mimic substance painters more blury roughness
+    float emissivedata = PixelShader_Emissive(input).myColor.b;
     
     float3 specularcolor = lerp((float3) 0.04, color.rgb, metalness);
     float3 diffusecolor = lerp((float3) 0.00, color.rgb, 1 - metalness);
@@ -59,11 +60,12 @@ PixelOutPut main(VertexToPixel input)
     float3 emissive = color * emissivedata;
     float3 radiance = ambience + directionallight + pointLights + emissive;
    
-    output.myColor.rgb = LinearToGamma(radiance);
+    output.myColor.rgb = LinearToGamma(radiance);// original
+    //output.myColor.rgb = GammaToLinear(radiance);
     output.myColor.a = color.w;
     
     
-    //output.myColor.rgb = color;
+   // output.myColor.rgb = color;
     
     return output;
 }

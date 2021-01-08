@@ -117,7 +117,7 @@ bool CForwardRenderer::Init(CDirectXFramework* aFramework) {
 void CForwardRenderer::Render(CEnvironmentLight* anEnvironmentLight, std::vector<std::pair<unsigned int, std::array<CPointLight*, LIGHTCOUNT>>> aModelPointLightList, CCameraComponent* aCamera, std::vector<CGameObject*>& aGameObjectList)
 {
 	DirectX::SimpleMath::Matrix& cameraMatrix = aCamera->GameObject().myTransform->Transform();
-	myFrameBufferData.myToCamera = cameraMatrix.Invert();;
+	myFrameBufferData.myToCamera = cameraMatrix.Invert();
 	myFrameBufferData.myToProjection = aCamera->GetProjection();
 	myFrameBufferData.myCameraPosition = DirectX::SimpleMath::Vector4{cameraMatrix._41, cameraMatrix._42, cameraMatrix._43, 1.f};
 	myFrameBufferData.myDirectionalLightDirection = anEnvironmentLight->GetDirection();
