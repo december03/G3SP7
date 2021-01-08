@@ -104,27 +104,27 @@ void CInputMapper::UpdateKeyboardInput()
 void CInputMapper::UpdateMouseInput()
 {
 
-	if (myInput->IsMouseDown(Input::MouseButton::Middle))
+	if (myInput->IsMouseDown(Input::EMouseButton::Middle))
 	{
 		TranslateActionToEvent(IInputObserver::EInputAction::MouseMiddle);
 	}
-	if (myInput->IsMousePressed(Input::MouseButton::Left))
+	if (myInput->IsMousePressed(Input::EMouseButton::Left))
 	{
 		TranslateActionToEvent(IInputObserver::EInputAction::MouseLeftPressed);
 	}
-	if (myInput->IsMouseDown(Input::MouseButton::Left))
+	if (myInput->IsMouseDown(Input::EMouseButton::Left))
 	{
 		TranslateActionToEvent(IInputObserver::EInputAction::MouseLeftDown);
 	}
-	//else if (myInput->IsMouseDown(Input::MouseButton::Left))
+	//else if (myInput->IsMouseDown(Input::EMouseButton::Left))
 	//{
 	//	TranslateActionToEvent(IInputObserver::EInputAction::MouseLeft);
 	//}
-	//else if (myInput->IsMouseReleased(Input::MouseButton::Left))
+	//else if (myInput->IsMouseReleased(Input::EMouseButton::Left))
 	//{
 	//	TranslateActionToEvent(IInputObserver::EInputAction::MouseLeft);
 	//}
-	if (myInput->IsMousePressed(Input::MouseButton::Right))
+	if (myInput->IsMousePressed(Input::EMouseButton::Right))
 	{
 		TranslateActionToEvent(IInputObserver::EInputAction::MouseRight);
 	}
@@ -134,7 +134,7 @@ void CInputMapper::Update()
 {
 	UpdateKeyboardInput();
 	UpdateMouseInput();
-	myInput->update();
+	myInput->Update();
 }
 
 void CInputMapper::MapEvent(const IInputObserver::EInputAction aInputEvent, const IInputObserver::EInputEvent aOutputEvent)

@@ -31,6 +31,9 @@ public:
 	const float GetResolutionScale() const;
 	void SetWindowTitle(std::string aString);
 
+	const bool CursorLocked() const;
+	void LockCursor(bool aShouldLock);
+
 private:
 	bool Init(CWindowHandler::SWindowData someWindowData);
 	void SetInternalResolution();
@@ -41,5 +44,6 @@ private:
 	HWND myWindowHandle;
 	DirectX::SimpleMath::Vector2* myResolution;
 	float myResolutionScale;
+	bool myCursorIsLocked;
 };
 

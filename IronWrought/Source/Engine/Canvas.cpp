@@ -176,7 +176,7 @@ void CCanvas::Update()
 		myButtons[i]->CheckMouseCollision(mousePos);
 	}
 
-	if (Input::GetInstance()->IsMousePressed(Input::MouseButton::Left))
+	if (Input::GetInstance()->IsMousePressed(Input::EMouseButton::Left))
 	{
 		for (unsigned int i = 0; i < myButtons.size(); ++i)
 		{
@@ -184,7 +184,7 @@ void CCanvas::Update()
 		}
 	}
 
-	if (Input::GetInstance()->IsMouseReleased(Input::MouseButton::Left))
+	if (Input::GetInstance()->IsMouseReleased(Input::EMouseButton::Left))
 	{
 		for (unsigned int i = 0; i < myButtons.size(); ++i)
 		{

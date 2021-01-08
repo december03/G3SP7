@@ -10,7 +10,7 @@ public:
 
 	static Input* GetInstance();
 
-	enum class MouseButton {
+	enum class EMouseButton {
 		Left = 0,
 		Right = 1,
 		Middle = 2,
@@ -21,13 +21,13 @@ public:
 
 	Input();
 
-	bool update_events(UINT message, WPARAM wParam, LPARAM lParam);
-	void update();
+	bool UpdateEvents(UINT message, WPARAM wParam, LPARAM lParam);
+	void Update();
 
 
-	bool move_left();
-	bool move_right();
-	bool move_up();
+	bool MoveLeft();
+	bool MoveRight();
+	bool MoveUp();
 	bool MoveDown();
 
 	bool IsKeyDown(WPARAM wParam);
@@ -40,24 +40,31 @@ public:
 	int MouseScreenY();
 	int MouseDeltaX();
 	int MouseDeltaY();
+	int MouseRawDeltaX();
+	int MouseRawDeltaY();
 	int MouseWheel();
 	void SetMouseScreenPosition(int x, int y);
-	bool IsMouseDown(MouseButton mouse_button);
-	bool IsMousePressed(MouseButton mouse_button);
-	bool IsMouseReleased(MouseButton mouse_button);
+	bool IsMouseDown(EMouseButton aMouseButton);
+	bool IsMousePressed(EMouseButton aMouseButton);
+	bool IsMouseReleased(EMouseButton aMouseButton);
 
 private:
-	int _mouse_x;
-	int _mouse_y;
-	int _mouse_screen_x;
-	int _mouse_screen_y;
-	int _mouse_x_last;
-	int _mouse_y_last;
-	int _mouse_wheel;//positive = away from user, negative = towards user
 
-	std::bitset<5> _mouse_button_last;
-	std::bitset<5> _mouse_button;
 
-	std::bitset<256> _key_down_last;
-	std::bitset<256> _key_down;
+private:
+	std::bitset<5> myMouseButtonLast;
+	std::bitset<5> myMouseButton;
+
+	std::bitset<256> myKeyDownLast;
+	std::bitset<256> myKeyDown;
+
+	int myMouseX;
+	int myMouseY;
+	int myMouseScreenX;
+	int myMouseScreenY;
+	int myMouseXLast;
+	int myMouseYLast;
+	int myMouseRawXLast;
+	int myMouseRawYLast;
+	int myMouseWheel;//positive = away from user, negative = towards user
 };

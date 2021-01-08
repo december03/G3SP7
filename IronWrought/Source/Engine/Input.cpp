@@ -8,91 +8,143 @@ Input* Input::GetInstance()
 }
 
 Input::Input() {
-	_mouse_x = 0;
-	_mouse_y = 0;
-	_mouse_x_last = 0;
-	_mouse_y_last = 0;
-	_mouse_wheel = 0;
-	_mouse_screen_x = 0;
-	_mouse_screen_y = 0;
+	myMouseX = 0;
+	myMouseY = 0;
+	myMouseXLast = 0;
+	myMouseYLast = 0;
+	myMouseRawXLast = 0;
+	myMouseRawYLast = 0;
+	myMouseWheel = 0;
+	myMouseScreenX = 0;
+	myMouseScreenY = 0;
+
+	RAWINPUTDEVICE rid;
+	rid.usUsagePage = 0x01; // For mouse
+	rid.usUsage = 0x02; // For mouse
+	rid.dwFlags = 0;
+	rid.hwndTarget = nullptr;
+	if (RegisterRawInputDevices(&rid, 1, sizeof(rid)) == FALSE)
+	{
+		ENGINE_BOOL_POPUP(false, "Mouse could not be registered as Raw Input Device")
+	}
 }
 
-bool Input::update_events(UINT message, WPARAM wParam, LPARAM lParam) {
+bool Input::UpdateEvents(UINT message, WPARAM wParam, LPARAM lParam) {
 
+	std::vector<char> rawBuffer;
 	switch (message) {
 	case WM_KEYDOWN:
-		_key_down[wParam] = true;
+		myKeyDown[wParam] = true;
 		return true;
 	case WM_KEYUP:
-		_key_down[wParam] = false;
+		myKeyDown[wParam] = false;
 		return true;
 	case WM_MOUSEMOVE:
-		_mouse_x = GET_X_LPARAM(lParam);//returns x coordiante
-		_mouse_y = GET_Y_LPARAM(lParam);//returns y coordinate
+		myMouseX = GET_X_LPARAM(lParam);//returns x coordiante
+		myMouseY = GET_Y_LPARAM(lParam);//returns y coordinate
 		return true;
 	case WM_MOUSEWHEEL:
-		_mouse_wheel += GET_WHEEL_DELTA_WPARAM(wParam);//returns difference in mouse wheel position
+		myMouseWheel += GET_WHEEL_DELTA_WPARAM(wParam);//returns difference in mouse wheel position
 		return true;
 	case WM_LBUTTONDOWN:
-		_mouse_button[(int)MouseButton::Left] = true;
+		myMouseButton[(int)EMouseButton::Left] = true;
 		return true;
 	case WM_LBUTTONUP:
-		_mouse_button[(int)MouseButton::Left] = false;
+		myMouseButton[(int)EMouseButton::Left] = false;
 		return true;
 	case WM_RBUTTONDOWN:
-		_mouse_button[(int)MouseButton::Right] = true;
+		myMouseButton[(int)EMouseButton::Right] = true;
 		return true;
 	case WM_RBUTTONUP:
-		_mouse_button[(int)MouseButton::Right] = false;
+		myMouseButton[(int)EMouseButton::Right] = false;
 		return true;
 	case WM_MBUTTONDOWN:
-		_mouse_button[(int)MouseButton::Middle] = true;
+		myMouseButton[(int)EMouseButton::Middle] = true;
 		return true;
 	case WM_MBUTTONUP:
-		_mouse_button[(int)MouseButton::Middle] = false;
+		myMouseButton[(int)EMouseButton::Middle] = false;
 		return true;
 	case WM_XBUTTONDOWN:
 		if (GET_XBUTTON_WPARAM(wParam) == XBUTTON1) {
-			_mouse_button[(int)MouseButton::Mouse4] = true;
-		} else if (GET_XBUTTON_WPARAM(wParam) == XBUTTON2) {
-			_mouse_button[(int)MouseButton::Mouse5] = true;
+			myMouseButton[(int)EMouseButton::Mouse4] = true;
+		}
+		else if (GET_XBUTTON_WPARAM(wParam) == XBUTTON2) {
+			myMouseButton[(int)EMouseButton::Mouse5] = true;
 		}
 		return true;
 	case WM_XBUTTONUP:
 		if (GET_XBUTTON_WPARAM(wParam) == XBUTTON1) {
-			_mouse_button[(int)MouseButton::Mouse4] = false;
-		} else if (GET_XBUTTON_WPARAM(wParam) == XBUTTON2) {
-			_mouse_button[(int)MouseButton::Mouse5] = false;
+			myMouseButton[(int)EMouseButton::Mouse4] = false;
 		}
+		else if (GET_XBUTTON_WPARAM(wParam) == XBUTTON2) {
+			myMouseButton[(int)EMouseButton::Mouse5] = false;
+		}
+		break;
+		// Raw Input
+	case WM_INPUT:
+		UINT size;
+		if (GetRawInputData(
+			reinterpret_cast<HRAWINPUT>(lParam),
+			RID_INPUT,
+			nullptr,
+			&size,
+			sizeof(RAWINPUTHEADER)) == -1)
+		{
+			// Error if inputdata == -1
+			break;
+		}
+		rawBuffer.resize(size);
+
+		if (GetRawInputData(
+			reinterpret_cast<HRAWINPUT>(lParam),
+			RID_INPUT,
+			rawBuffer.data(),
+			&size,
+			sizeof(RAWINPUTHEADER)) != size)
+		{
+			// Probably an error if the size doesn't match up
+			break;
+		}
+		auto& rawInput = reinterpret_cast<const RAWINPUT&>(*rawBuffer.data());
+		if (rawInput.header.dwType == RIM_TYPEMOUSE &&
+			(rawInput.data.mouse.lLastX != 0 || rawInput.data.mouse.lLastY != 0))
+		{
+			// Register raw input
+			myMouseRawXLast = rawInput.data.mouse.lLastX;
+			myMouseRawYLast = rawInput.data.mouse.lLastY;
+		}
+		break;
 	}
 
 	return false;
 }
 
-void Input::update() {
-	_key_down_last = _key_down;
+void Input::Update() {
+	myKeyDownLast = myKeyDown;
 
-	_mouse_x_last = _mouse_x;
-	_mouse_y_last = _mouse_y;
-	_mouse_wheel = 0;
-	_mouse_button_last = _mouse_button;
+	myMouseXLast = myMouseX;
+	myMouseYLast = myMouseY;
+	myMouseRawXLast = 0;
+	myMouseRawYLast = 0;
+	myMouseWheel = 0;
+	myMouseButtonLast = myMouseButton;
 
 	POINT point;
 	if (GetCursorPos(&point)) {
-		_mouse_screen_x = point.x;
-		_mouse_screen_y = point.y;
+		myMouseScreenX = point.x;
+		myMouseScreenY = point.y;
 	}
 }
 
-bool Input::move_left() {
+bool Input::MoveLeft() {
 	return IsKeyPressed('A') == true || IsKeyPressed(VK_LEFT) == true;
 }
 
-bool Input::move_right() {
+bool Input::MoveRight() {
 	return IsKeyPressed('D') == true || IsKeyPressed(VK_RIGHT) == true;
 }
 
-bool Input::move_up() {
+bool Input::MoveUp() {
 	return IsKeyPressed('W') == true || IsKeyPressed(VK_UP) == true;
 }
 
@@ -101,57 +153,67 @@ bool Input::MoveDown() {
 }
 
 bool Input::IsKeyDown(WPARAM wParam) {
-	return _key_down[wParam];
+	return myKeyDown[wParam];
 }
 
 bool Input::IsKeyPressed(WPARAM wParam) {
-	return _key_down[wParam] && (!_key_down_last[wParam]);
+	return myKeyDown[wParam] && (!myKeyDownLast[wParam]);
 }
 
 bool Input::IsKeyReleased(WPARAM wParam) {
-	return (!_key_down[wParam]) && _key_down_last[wParam];
+	return (!myKeyDown[wParam]) && myKeyDownLast[wParam];
 }
 
 int Input::MouseX() {
-	return _mouse_x;
+	return myMouseX;
 }
 
 int Input::MouseY() {
-	return _mouse_y;
+	return myMouseY;
 }
 
 int Input::MouseScreenX() {
-	return _mouse_screen_x;
+	return myMouseScreenX;
 }
 
 int Input::MouseScreenY() {
-	return _mouse_screen_y;
+	return myMouseScreenY;
 }
 
 int Input::MouseDeltaX() {
-	return (_mouse_x - _mouse_x_last);
+	return (myMouseX - myMouseXLast);
 }
 
 int Input::MouseDeltaY() {
-	return (_mouse_y - _mouse_y_last);
+	return (myMouseY - myMouseYLast);
+}
+
+int Input::MouseRawDeltaX()
+{
+	return myMouseRawXLast;
+}
+
+int Input::MouseRawDeltaY()
+{
+	return myMouseRawYLast;
 }
 
 int Input::MouseWheel() {
-	return _mouse_wheel;
+	return myMouseWheel;
 }
 
 void Input::SetMouseScreenPosition(int x, int y) {
 	SetCursorPos(x, y);
 }
 
-bool Input::IsMouseDown(MouseButton mouse_button) {
-	return _mouse_button[(int)mouse_button];
+bool Input::IsMouseDown(EMouseButton aMouseButton) {
+	return myMouseButton[(int)aMouseButton];
 }
 
-bool Input::IsMousePressed(MouseButton mouse_button) {
-	return _mouse_button[(int)mouse_button] && (!_mouse_button_last[(int)mouse_button]);
+bool Input::IsMousePressed(EMouseButton aMouseButton) {
+	return myMouseButton[(int)aMouseButton] && (!myMouseButtonLast[(int)aMouseButton]);
 }
 
-bool Input::IsMouseReleased(MouseButton mouse_button) {
-	return (!_mouse_button[(int)mouse_button]) && _mouse_button_last[(int)mouse_button];
+bool Input::IsMouseReleased(EMouseButton aMouseButton) {
+	return (!myMouseButton[(int)aMouseButton]) && myMouseButtonLast[(int)aMouseButton];
 }

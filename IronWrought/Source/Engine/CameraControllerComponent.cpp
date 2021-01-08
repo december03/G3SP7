@@ -7,6 +7,8 @@
 //#include "GameObject.h"
 #include "PlayerControllerComponent.h"
 
+#define PI 3.14159265f
+
 CCameraControllerComponent::CCameraControllerComponent(CGameObject& aGameObject, float aCameraMoveSpeed, ECameraMode aCameraMode, char aToggleFreeCam, Vector3 aOffset)
 	: CComponent(aGameObject),
 	myCameraMoveSpeed(aCameraMoveSpeed),
@@ -14,9 +16,11 @@ CCameraControllerComponent::CCameraControllerComponent(CGameObject& aGameObject,
 	myCameraMode(aCameraMode),
 	myToggleFreeCam(aToggleFreeCam),
 	myPlayer(nullptr),
-	myOffset(aOffset)
+	myOffset(aOffset),
+	myMouseRotationSpeed(120.0f),
+	myPitch(0.0f),
+	myYaw(0.0f)
 {
-
 }
 
 CCameraControllerComponent::~CCameraControllerComponent()
@@ -37,8 +41,13 @@ void CCameraControllerComponent::Start()
 void CCameraControllerComponent::Update()
 {
 #ifdef  _DEBUG
-	if (Input::GetInstance()->IsKeyPressed(std::toupper(myToggleFreeCam))) {
-		//myCameraMode = myCameraMode == ECameraMode::FreeCam ? ECameraMode::Player : ECameraMode::FreeCam;
+	if (Input::GetInstance()->IsKeyPressed(/*std::toupper(myToggleFreeCam)*/myToggleFreeCam)) {
+		myCameraMode = myCameraMode == ECameraMode::FreeCam ? ECameraMode::Player : ECameraMode::FreeCam;
+		
+		// TEMPORARY
+		bool showCursor = CEngine::GetInstance()->GetWindowHandler()->CursorLocked();
+		CEngine::GetInstance()->GetWindowHandler()->LockCursor(!showCursor);
+		// TEMPORARY
 	}
 #endif
 	if (myCameraMode == ECameraMode::MenuCam) {
@@ -46,8 +55,25 @@ void CCameraControllerComponent::Update()
 	} else if (myCameraMode == ECameraMode::FreeCam) {
 		UpdateFreeCam();
 	} else {
-		GameObject().myTransform->Position(myPlayer->GameObject().myTransform->Position() + myOffset);
+		// PUT PLAYER CAMERA LOGIC HERE
+		//UpdateFreeCam(); // TEMPORARY 2021-01-08 Nico & Axel
+		//GameObject().myTransform->Position(myPlayer->GameObject().myTransform->Position() + myOffset);
 	}
+}
+
+float WrapAngle(float anAngle)
+{
+	return fmodf(anAngle, 360.0f);
+}
+
+float ToDegrees(float anAngleInRadians)
+{
+	return anAngleInRadians * (180.0f / PI);
+}
+
+float ToRadians(float anAngleInDegrees)
+{
+	return anAngleInDegrees * (PI / 180.0f);
 }
 
 void CCameraControllerComponent::UpdateFreeCam()
@@ -56,19 +82,25 @@ void CCameraControllerComponent::UpdateFreeCam()
 	const float dt = CTimer::Dt();
 	//float cameraMoveSpeed = 25.0f;
 	float verticalMoveSpeedModifier = 1.5f;
-	DirectX::SimpleMath::Vector3 camera_movement_input(0, 0, 0);
-	camera_movement_input.z = Input::GetInstance()->IsKeyDown('W') ? myCameraMoveSpeed : camera_movement_input.z;
-	camera_movement_input.z = Input::GetInstance()->IsKeyDown('S') ? -myCameraMoveSpeed : camera_movement_input.z;
-	camera_movement_input.x = Input::GetInstance()->IsKeyDown('D') ? myCameraMoveSpeed : camera_movement_input.x;
-	camera_movement_input.x = Input::GetInstance()->IsKeyDown('A') ? -myCameraMoveSpeed : camera_movement_input.x;
-	camera_movement_input.y = Input::GetInstance()->IsKeyDown('R') ? myCameraMoveSpeed * verticalMoveSpeedModifier : camera_movement_input.y;
-	camera_movement_input.y = Input::GetInstance()->IsKeyDown('F') ? -myCameraMoveSpeed * verticalMoveSpeedModifier : camera_movement_input.y;
+	DirectX::SimpleMath::Vector3 cameraMovementInput(0, 0, 0);
+	cameraMovementInput.z = Input::GetInstance()->IsKeyDown('W') ? myCameraMoveSpeed : cameraMovementInput.z;
+	cameraMovementInput.z = Input::GetInstance()->IsKeyDown('S') ? -myCameraMoveSpeed : cameraMovementInput.z;
+	cameraMovementInput.x = Input::GetInstance()->IsKeyDown('D') ? myCameraMoveSpeed : cameraMovementInput.x;
+	cameraMovementInput.x = Input::GetInstance()->IsKeyDown('A') ? -myCameraMoveSpeed : cameraMovementInput.x;
+	cameraMovementInput.y = Input::GetInstance()->IsKeyDown('E') ? myCameraMoveSpeed * verticalMoveSpeedModifier : cameraMovementInput.y;
+	cameraMovementInput.y = Input::GetInstance()->IsKeyDown('Q') ? -myCameraMoveSpeed * verticalMoveSpeedModifier : cameraMovementInput.y;
+	
+	float dx = static_cast<float>(Input::GetInstance()->MouseRawDeltaX());
+	float dy = static_cast<float>(Input::GetInstance()->MouseRawDeltaY());
 
-	float rotationSpeed = 1.0f;
-	float camera_rotation_input = 0;
-	camera_rotation_input = Input::GetInstance()->IsKeyDown('Q') ? -rotationSpeed : camera_rotation_input;
-	camera_rotation_input = Input::GetInstance()->IsKeyDown('E') ? rotationSpeed : camera_rotation_input;
+	myYaw = WrapAngle(myYaw + (dx * myMouseRotationSpeed * dt));
+	myPitch = std::clamp(myPitch + (dy * myMouseRotationSpeed * dt), ToDegrees(-PI / 2.0f), ToDegrees(PI / 2.0f));
 
-	GameObject().myTransform->MoveLocal(camera_movement_input * myCameraMoveSpeed * dt);
-	GameObject().myTransform->Rotate({0, camera_rotation_input * rotationSpeed * dt, 0});
+	GameObject().myTransform->MoveLocal(cameraMovementInput * myCameraMoveSpeed * dt);
+	GameObject().myTransform->Rotation({ myPitch, myYaw, 0});
+
+	if (CEngine::GetInstance()->GetWindowHandler()->CursorLocked()) {
+		auto screenDimensions = CEngine::GetInstance()->GetWindowHandler()->GetResolution();
+		Input::GetInstance()->SetMouseScreenPosition(static_cast<int>(screenDimensions.x / 2.0f), static_cast<int>(screenDimensions.y / 2.0f));
+	}
 }

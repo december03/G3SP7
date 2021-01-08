@@ -84,8 +84,8 @@ void CTitleScreenState::Update()
 	if (Input::GetInstance()->IsKeyPressed(VK_RETURN)
 		|| Input::GetInstance()->IsKeyPressed(VK_SPACE)
 		|| Input::GetInstance()->IsKeyPressed(VK_ESCAPE)
-		|| Input::GetInstance()->IsMousePressed(Input::MouseButton::Left)
-		|| Input::GetInstance()->IsMousePressed(Input::MouseButton::Right)
+		|| Input::GetInstance()->IsMousePressed(Input::EMouseButton::Left)
+		|| Input::GetInstance()->IsMousePressed(Input::EMouseButton::Right)
 		)
 	{
 		myStateStack.PopTopAndPush(CStateStack::EState::MainMenu);

@@ -18,8 +18,17 @@ LRESULT CWindowHandler::WinProc(_In_ HWND hwnd, _In_ UINT uMsg, _In_ WPARAM wPar
             createStruct = reinterpret_cast<CREATESTRUCT*>(lParam);
             windowHandler = reinterpret_cast<CWindowHandler*>(createStruct->lpCreateParams);
             break;
+
+        case WM_KILLFOCUS:
+            windowHandler->LockCursor(false);
+            break;
+
+        case WM_SETFOCUS:
+            windowHandler->LockCursor(true);
+            break;
+
         default:
-            Input::GetInstance()->update_events(uMsg, wParam, lParam);
+            Input::GetInstance()->UpdateEvents(uMsg, wParam, lParam);
             break;
     }
 
@@ -30,6 +39,7 @@ CWindowHandler::CWindowHandler()
 {
     myWindowHandle = 0;
     myResolutionScale = 1.0f;
+    myCursorIsLocked = false;
 }
 
 CWindowHandler::~CWindowHandler()
@@ -102,6 +112,8 @@ bool CWindowHandler::Init(CWindowHandler::SWindowData someWindowData)
     //    0, 0, /*GetSystemMetrics(SM_CXSCREEN)*/1920, /*GetSystemMetrics(SM_CYSCREEN)*/1080,
     //    NULL, NULL, GetModuleHandle(nullptr), this);
 
+    LockCursor(true);
+
     myResolution = new Vector2();
     return true;
 }
@@ -123,6 +135,24 @@ void CWindowHandler::SetResolution(DirectX::SimpleMath::Vector2 aResolution)
     SetInternalResolution();
 }
 
+const bool CWindowHandler::CursorLocked() const
+{
+    return myCursorIsLocked;
+}
+
+void CWindowHandler::LockCursor(bool aShouldLock)
+{
+    myCursorIsLocked = aShouldLock;
+    if (aShouldLock)
+    {
+        while (::ShowCursor(FALSE) >= 0);
+    }
+    else {
+        while (::ShowCursor(TRUE) < 0);
+    }
+    aShouldLock ? SetCapture(myWindowHandle) : SetCapture(nullptr);
+}
+
 void CWindowHandler::SetInternalResolution()
 {
     LPRECT rect = new RECT{ 0, 0, 0, 0 };
@@ -130,10 +160,10 @@ void CWindowHandler::SetInternalResolution()
         myResolution->x = static_cast<float>(rect->right);
         myResolution->y = static_cast<float>(rect->bottom);
     }
+    ClipCursor(rect);
     delete rect;
 
     myResolutionScale = myResolution->y / 1080.0f;
-    std::cout << myResolutionScale << std::endl;
 }
 
 void CWindowHandler::SetWindowTitle(std::string aString)
