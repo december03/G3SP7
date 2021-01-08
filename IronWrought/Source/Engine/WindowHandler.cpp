@@ -44,6 +44,8 @@ CWindowHandler::CWindowHandler()
 
 CWindowHandler::~CWindowHandler()
 {
+    LockCursor(false);
+    myCursorIsLocked = false;
     myWindowHandle = 0;
     delete myResolution;
     myResolution = nullptr;

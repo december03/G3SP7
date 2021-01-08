@@ -8,7 +8,10 @@
 CEnviromentLightComponent::CEnviromentLightComponent(CGameObject& aParent, DirectX::SimpleMath::Vector3 aColor, float anIntensity, DirectX::SimpleMath::Vector3 aDirection)
 	: CComponent(aParent)
 {
-	myEnvironmentLight = CLightFactory::GetInstance()->CreateEnvironmentLight("Assets/Cubemaps/Gdansk_shipyard_buildings_cubemap.dds");
+	// TODO 
+	//	Step through code to look for issues. Like with mips.
+
+	myEnvironmentLight = CLightFactory::GetInstance()->CreateEnvironmentLight("Assets/Cubemaps/panorama_cube_specular.dds");
 	myEnvironmentLight->SetColor(aColor);
 	myEnvironmentLight->SetIntensity(anIntensity);
 	//not sure if this work! We want to set the direction of this transform!
