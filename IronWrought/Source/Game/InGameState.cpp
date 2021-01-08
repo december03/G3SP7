@@ -10,6 +10,8 @@
 #include "EnviromentLightComponent.h"
 #include "TransformComponent.h"
 
+#include "ModelComponent.h"
+#include "EnvironmentLight.h"
 #include "Timer.h"
 #include "Engine.h"
 #include "PostMaster.h"
@@ -45,18 +47,26 @@ void CInGameState::Start()
 	CGameObject* camera = new CGameObject(0);
 	camera->AddComponent<CCameraComponent>(*camera, 70.0f);
 	camera->AddComponent<CCameraControllerComponent>(*camera, 25.0f);
-	camera->myTransform->Position({ 0.0f, 1.0f, 0.0f });
-	camera->myTransform->Rotation({ 0.0f, 0.0f, 0.0f });
+	camera->myTransform->Position({0.0f, 1.0f, 0.0f});
+	camera->myTransform->Rotation({0.0f, 0.0f, 0.0f});
 	scene->AddInstance(camera);
 	scene->SetMainCamera(camera->GetComponent<CCameraComponent>());
 
 	CGameObject* envLight = new CGameObject(1);
 	envLight->AddComponent<CEnviromentLightComponent>(*envLight);
+	envLight->GetComponent<CEnviromentLightComponent>()->GetEnviromentLight()->SetIntensity(10.f);
+	envLight->GetComponent<CEnviromentLightComponent>()->GetEnviromentLight()->SetDirection({0.0f,1.0f,-1.0f});
 	scene->AddInstance(envLight);
 	scene->SetEnvironmentLight(envLight->GetComponent<CEnviromentLightComponent>()->GetEnviromentLight());
 
 	CEngine::GetInstance()->AddScene(myState, scene);
 	CEngine::GetInstance()->SetActiveScene(myState);
+
+	CGameObject* chest = new CGameObject(1337);
+	chest->AddComponent<CModelComponent>(*chest, "Assets/3D/Exempel_Modeller/Chest/Particle_Chest.fbx");
+	chest->GetComponent<CTransformComponent>()->Position({0.0f,0.0f,0.0f});
+
+	scene->AddInstance(chest);
 
 	myExitLevel = false;
 
@@ -69,7 +79,7 @@ void CInGameState::Start()
 			gameObjects[i]->Awake();
 		}
 	}
-	
+
 	////Late awake
 	size_t newSize = gameObjects.size();
 	for (size_t j = currentSize; j < newSize; ++j)
@@ -79,7 +89,7 @@ void CInGameState::Start()
 			gameObjects[j]->Awake();
 		}
 	}
-	
+
 	for (auto& gameObject : CEngine::GetInstance()->GetActiveScene().myGameObjects)
 	{
 		gameObject->Start();

@@ -18,7 +18,7 @@
 
 CRenderManager::CRenderManager() /*: myScene(*CScene::GetInstance())*/
 	: myUseBloom(true)
-	, myClearColor(0.1f, 0.1f, 0.1f, 1.0f)
+	, myClearColor(0.8f, 0.5f, 0.5f, 1.0f)
 {
 }
 

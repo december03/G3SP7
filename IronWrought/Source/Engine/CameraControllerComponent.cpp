@@ -61,8 +61,8 @@ void CCameraControllerComponent::UpdateFreeCam()
 	camera_movement_input.z = Input::GetInstance()->IsKeyDown('S') ? -myCameraMoveSpeed : camera_movement_input.z;
 	camera_movement_input.x = Input::GetInstance()->IsKeyDown('D') ? myCameraMoveSpeed : camera_movement_input.x;
 	camera_movement_input.x = Input::GetInstance()->IsKeyDown('A') ? -myCameraMoveSpeed : camera_movement_input.x;
-	camera_movement_input.y = Input::GetInstance()->IsKeyDown('R') ? myCameraMoveSpeed * verticalMoveSpeedModifier : camera_movement_input.y;
-	camera_movement_input.y = Input::GetInstance()->IsKeyDown('F') ? -myCameraMoveSpeed * verticalMoveSpeedModifier : camera_movement_input.y;
+	camera_movement_input.y = Input::GetInstance()->IsKeyDown(VK_SPACE) ? myCameraMoveSpeed * verticalMoveSpeedModifier : camera_movement_input.y;
+	camera_movement_input.y = Input::GetInstance()->IsKeyDown(VK_SHIFT) ? -myCameraMoveSpeed * verticalMoveSpeedModifier : camera_movement_input.y;
 
 	float rotationSpeed = 1.0f;
 	float camera_rotation_input = 0;
