@@ -192,7 +192,7 @@ CModel* CModelFactory::LoadModelPBR(std::string aFilePath)
 	ID3D11Device* device = myEngine->myFramework->GetDevice();
 	std::string modelDirectoryAndName = modelDirectory + modelName;
 
-	//UPDATE THIS ON MONDAY
+	//UPDATE THIS ON MONDAY WHAT MONDAY?????????
 	//std::map<int, std::string> trimsheets;
 	//trimsheets.emplace(static_cast<int>('1'), "ts_1_Dungeon");
 	//trimsheets.emplace(static_cast<int>('2'), "ts_2_Something");

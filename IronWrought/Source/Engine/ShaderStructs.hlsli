@@ -1,9 +1,9 @@
 #include "EngineDefines.h"
 
 TextureCube environmentTexture : register(t0);
-Texture2D diffuseTexture : register(t1); //RGB-A = Albedo
-Texture2D materialTexture : register(t2); //R = Metalness, G = Roughness, B = Emissive
-Texture2D normalTexture : register(t3); //RGB = Normal, A = AmbientOcclusion
+Texture2D colorTexture : register(t1); //sRGB: RGB-A = Color
+Texture2D materialTexture : register(t2); //Linear: R = Metalness, G = Roughness, B = Emissive, A = Strength
+Texture2D normalTexture : register(t3); //Linear: R = null, G = Normal.y, B = AmbientOcclusion, A = Normal.x
 
 SamplerState defaultSampler : register(s0);
 
@@ -23,7 +23,7 @@ cbuffer ObjectBuffer : register(b1)
     {
         float4 myPositionAndIntensity;
         float4 myColorAndRange;
-    }myPointLights[LIGHTCOUNT];
+    } myPointLights[LIGHTCOUNT];
     
     unsigned int myNumberOfUsedPointLights;
     unsigned int myPadding[3];

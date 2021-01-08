@@ -7,9 +7,6 @@
     <FxCompile Include="PixelShader.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="PBRPixelShader.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
     <FxCompile Include="VertexShader.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
@@ -102,6 +99,12 @@
     </FxCompile>
     <FxCompile Include="RenderPassAmbientOcclusionPixelShader.hlsl">
       <Filter>Shaders\Render Passes</Filter>
+    </FxCompile>
+    <FxCompile Include="OldPBRPixelShader.hlsl">
+      <Filter>Shaders\Old PBR-shader</Filter>
+    </FxCompile>
+    <FxCompile Include="PBRPixelShader.hlsl">
+      <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -713,21 +716,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="PBRDirectionalLight.hlsli">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="PBRAmbience.hlsli">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="MathHelpers.hlsli">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="ShaderStructs.hlsli">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="SamplingFunctions.hlsli">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="CubeShaderStructs.hlsli">
       <Filter>Shaders\Cube</Filter>
     </None>
@@ -748,6 +736,36 @@
     </None>
     <None Include="LineShaderStructs.hlsli">
       <Filter>Shaders\Line</Filter>
+    </None>
+    <None Include="OldPBRAmbience.hlsli">
+      <Filter>Shaders\Old PBR-shader</Filter>
+    </None>
+    <None Include="OldPBRDirectionalLight.hlsli">
+      <Filter>Shaders\Old PBR-shader</Filter>
+    </None>
+    <None Include="OldSamplingFunctions.hlsli">
+      <Filter>Shaders\Old PBR-shader</Filter>
+    </None>
+    <None Include="OldMathHelpers.hlsli">
+      <Filter>Shaders\Old PBR-shader</Filter>
+    </None>
+    <None Include="OldShaderStructs.hlsli">
+      <Filter>Shaders\Old PBR-shader</Filter>
+    </None>
+    <None Include="MathHelpers.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="PBRAmbience.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="PBRDirectionalLight.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="SamplingFunctions.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="ShaderStructs.hlsli">
+      <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -855,6 +873,9 @@
     </Filter>
     <Filter Include="Unused">
       <UniqueIdentifier>{ddb86846-d8dd-4a03-a6fe-d01dc5e6c953}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Old PBR-shader">
+      <UniqueIdentifier>{69a517f8-dddf-46db-bcf2-554cf39ddba7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -43,7 +43,7 @@ void CCameraControllerComponent::Update()
 #ifdef  _DEBUG
 	if (Input::GetInstance()->IsKeyPressed(/*std::toupper(myToggleFreeCam)*/myToggleFreeCam)) {
 		myCameraMode = myCameraMode == ECameraMode::FreeCam ? ECameraMode::Player : ECameraMode::FreeCam;
-		
+
 		// TEMPORARY
 		bool showCursor = CEngine::GetInstance()->GetWindowHandler()->CursorLocked();
 		CEngine::GetInstance()->GetWindowHandler()->LockCursor(!showCursor);
@@ -89,7 +89,7 @@ void CCameraControllerComponent::UpdateFreeCam()
 	cameraMovementInput.x = Input::GetInstance()->IsKeyDown('A') ? -myCameraMoveSpeed : cameraMovementInput.x;
 	cameraMovementInput.y = Input::GetInstance()->IsKeyDown('E') ? myCameraMoveSpeed * verticalMoveSpeedModifier : cameraMovementInput.y;
 	cameraMovementInput.y = Input::GetInstance()->IsKeyDown('Q') ? -myCameraMoveSpeed * verticalMoveSpeedModifier : cameraMovementInput.y;
-	
+
 	float dx = static_cast<float>(Input::GetInstance()->MouseRawDeltaX());
 	float dy = static_cast<float>(Input::GetInstance()->MouseRawDeltaY());
 

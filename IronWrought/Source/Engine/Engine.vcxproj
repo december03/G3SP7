@@ -755,7 +755,7 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='G3_Release|x64'">4.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='G4_Release|x64'">4.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="PBRPixelShader.hlsl">
+    <FxCompile Include="OldPBRPixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='G3_Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='G4_Debug|x64'">Pixel</ShaderType>
@@ -768,6 +768,14 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='G3_Debug|x64'">4.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='G4_Debug|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="PBRPixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='G3_Release|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='G4_Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='G3_Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='G4_Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="PixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
@@ -937,7 +945,12 @@
     <None Include="FullscreenShaderStructs.hlsli" />
     <None Include="LineShaderStructs.hlsli" />
     <None Include="MathHelpers.hlsli" />
+    <None Include="OldMathHelpers.hlsli" />
     <None Include="ParticleShaderStructs.hlsli" />
+    <None Include="OldPBRAmbience.hlsli" />
+    <None Include="OldPBRDirectionalLight.hlsli" />
+    <None Include="OldSamplingFunctions.hlsli" />
+    <None Include="OldShaderStructs.hlsli" />
     <None Include="PBRAmbience.hlsli" />
     <None Include="PBRDirectionalLight.hlsli" />
     <None Include="SamplingFunctions.hlsli" />

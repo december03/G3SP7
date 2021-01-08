@@ -4,7 +4,7 @@ PixelOutPut main(VertexToPixel input)
 {
     PixelOutPut returnValue;
     
-    float3 textureColor = diffuseTexture.Sample(defaultSampler, input.myUV.xy).rgb;
+    float3 textureColor = colorTexture.Sample(defaultSampler, input.myUV.xy).rgb;
     float3 textureNormal = normalTexture.Sample(defaultSampler, input.myUV.xy).rgb;
     textureNormal = (textureNormal * 2) - 1;
     
