@@ -105,74 +105,25 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AbilityBehaviorComponent.h" />
-    <ClInclude Include="AbilityComponent.h" />
     <ClInclude Include="AIBehavior.h" />
     <ClInclude Include="AIBehaviorComponent.h" />
-    <ClInclude Include="AuraBehavior.h" />
-    <ClInclude Include="BoomerangBehavior.h" />
-    <ClInclude Include="BootUpState.h" />
-    <ClInclude Include="BossBehavior.h" />
-    <ClInclude Include="ColliderPushManager.h" />
-    <ClInclude Include="DamageUtility.h" />
-    <ClInclude Include="DelayedExplosionBehavior.h" />
-    <ClInclude Include="EnemyBehavior.h" />
-    <ClInclude Include="FireConeBehavior.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="AbilityBehavior.h" />
-    <ClInclude Include="HealthBarComponent.h" />
     <ClInclude Include="InGameState.h" />
-    <ClInclude Include="IntroState.h" />
-    <ClInclude Include="LevelSelectState.h" />
-    <ClInclude Include="LoadLevelState.h" />
-    <ClInclude Include="LoadObjectComponent.h" />
-    <ClInclude Include="MeleeAttackBehavior.h" />
-    <ClInclude Include="MouseSelection.h" />
-    <ClInclude Include="OptionsState.h" />
-    <ClInclude Include="PauseState.h" />
-    <ClInclude Include="PlayerGlobalState.h" />
-    <ClInclude Include="ProjectileBehavior.h" />
     <ClInclude Include="SceneData.h" />
     <ClInclude Include="SceneReader.h" />
-    <ClInclude Include="SpeedExplodeBehavior.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="TitleScreenState.h" />
     <ClInclude Include="UnityFactory.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AbilityBehavior.cpp" />
-    <ClCompile Include="AbilityBehaviorComponent.cpp" />
-    <ClCompile Include="AbilityComponent.cpp" />
     <ClCompile Include="AIBehavior.cpp" />
     <ClCompile Include="AIBehaviorComponent.cpp" />
-    <ClCompile Include="AuraBehavior.cpp" />
-    <ClCompile Include="BoomerangBehavior.cpp" />
-    <ClCompile Include="BootUpState.cpp" />
-    <ClCompile Include="BossBehavior.cpp" />
-    <ClCompile Include="ColliderPushManager.cpp" />
-    <ClCompile Include="DelayedExplosionBehavior.cpp" />
-    <ClCompile Include="EnemyBehavior.cpp" />
-    <ClCompile Include="FireConeBehavior.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="HealthBarComponent.cpp" />
     <ClCompile Include="InGameState.cpp" />
-    <ClCompile Include="IntroState.cpp" />
-    <ClCompile Include="LevelSelectState.cpp" />
-    <ClCompile Include="LoadLevelState.cpp" />
-    <ClCompile Include="LoadObjectComponent.cpp" />
-    <ClCompile Include="MeleeAttackBehavior.cpp" />
-    <ClCompile Include="MouseSelection.cpp" />
-    <ClCompile Include="OptionsState.cpp" />
-    <ClCompile Include="PauseState.cpp" />
-    <ClCompile Include="PlayerGlobalState.cpp" />
-    <ClCompile Include="ProjectileBehavior.cpp" />
     <ClCompile Include="SceneReader.cpp" />
-    <ClCompile Include="SpeedExplodeBehavior.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="TitleScreenState.cpp" />
     <ClCompile Include="UnityFactory.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

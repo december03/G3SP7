@@ -3,7 +3,6 @@
 #include "CollisionManager.h"
 #include "PopupTextService.h"
 #include "DialogueSystem.h"
-#include "../Game/PlayerGlobalState.h"
 
 class CMainSingleton
 {
@@ -14,7 +13,6 @@ public:
 	static CCollisionManager& CollisionManager();
 	static CPopupTextService& PopupTextService();
 	static CDialogueSystem& DialogueSystem();
-	static CPlayerGlobalState& PlayerGlobalState();
 
 private:
 	static CMainSingleton* ourInstance;
@@ -23,7 +21,6 @@ private:
 	CCollisionManager	myCollisionManager;
 	CPopupTextService	myPopupTextService;
 	CDialogueSystem		myDialogueSystem;
-	CPlayerGlobalState  myPlayerGlobalState;
 
 private:
 	CMainSingleton();

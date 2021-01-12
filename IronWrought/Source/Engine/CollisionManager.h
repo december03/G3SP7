@@ -37,7 +37,6 @@ public:
 
 	void RegisterCollider(CCollider* aCollider);
 	void ClearColliders();
-	bool CheckIfAbility(CCollider* anAbilityCollider, CGameObject* aCollidedWithGameObject);
 	void Update();
 
 private:

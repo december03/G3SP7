@@ -9,14 +9,7 @@
 #include "Collider.h"
 #include "TransformComponent.h"
 #include <SimpleMath.h>
-#include <SpeedExplodeBehavior.h>
-#include <DelayedExplosionBehavior.h>
-#include <BoomerangBehavior.h>
 #include "GameObject.h"
-#include <ProjectileBehavior.h>
-#include <MeleeAttackBehavior.h>
-#include <FireConeBehavior.h>
-#include <AbilityBehaviorComponent.h>
 
 using namespace DirectX::SimpleMath;
 
@@ -32,31 +25,6 @@ void CCollisionManager::RegisterCollider(CCollider* aCollider)
 {
 	assert(aCollider != nullptr && "Collider is nullptr");
 	myColliders.emplace_back(aCollider);
-}
-
-// Might be a thing for SP6
-
-bool CCollisionManager::CheckIfAbility(CCollider* /*anAbilityCollider*/, CGameObject* /*aCollidedWithGameObject*/)
-{
-//	if (anAbilityCollider->GetCollisionLayer() != ECollisionLayer::PLAYERABILITY) {
-//		if (anAbilityCollider->GetCollisionLayer() != ECollisionLayer::ENEMYABILITY) {
-//			if (anAbilityCollider->GetCollisionLayer() != ECollisionLayer::BOSSABILITY) {
-//				return false;
-//			}
-//		}
-//	}
-//
-//	CGameObject* abilityGameObject = &anAbilityCollider->GameObject();
-//
-//	CAbilityBehaviorComponent* abilityBehavior = abilityGameObject->GetComponent<CAbilityBehaviorComponent>();
-//
-//	IAbilityBehavior* behavior = abilityBehavior->AbilityBehavior();
-//	if (!abilityBehavior) {
-//		return false;
-//	}
-//
-//	behavior->Collided(aCollidedWithGameObject);
-	return false;
 }
 
 void CCollisionManager::ClearColliders()
@@ -87,10 +55,6 @@ void CCollisionManager::Update()
 					{
 						myColliders[outer]->GameObject().Collided(myColliders[inner]->GameObject());
 						myColliders[inner]->GameObject().Collided(myColliders[outer]->GameObject());
-						
-						if (!CheckIfAbility(myColliders[inner], &myColliders[outer]->GameObject())) {
-							CheckIfAbility(myColliders[outer], &myColliders[inner]->GameObject());
-						}
 					}
 				}
 			}
@@ -101,10 +65,6 @@ void CCollisionManager::Update()
 					{
 						myColliders[outer]->GameObject().Collided(myColliders[inner]->GameObject());
 						myColliders[inner]->GameObject().Collided(myColliders[outer]->GameObject());
-
-						if (!CheckIfAbility(myColliders[inner], &myColliders[outer]->GameObject())) {
-							CheckIfAbility(myColliders[outer], &myColliders[inner]->GameObject());
-						}
 					}
 				}
 			}

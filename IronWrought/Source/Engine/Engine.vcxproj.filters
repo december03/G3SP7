@@ -286,9 +286,6 @@
     <ClCompile Include="StackWalker.cpp">
       <Filter>Debug Tools</Filter>
     </ClCompile>
-    <ClCompile Include="MenuState.cpp">
-      <Filter>State Stack</Filter>
-    </ClCompile>
     <ClCompile Include="State.cpp">
       <Filter>State Stack</Filter>
     </ClCompile>
@@ -366,9 +363,6 @@
     <ClCompile Include="DialogueSystem.cpp" />
     <ClCompile Include="TextRenderer.cpp">
       <Filter>Renderers</Filter>
-    </ClCompile>
-    <ClCompile Include="CreditsState.cpp">
-      <Filter>State Stack</Filter>
     </ClCompile>
     <ClCompile Include="DestructibleComponent.cpp">
       <Filter>GameObject and Component\Component</Filter>
@@ -584,9 +578,6 @@
     <ClInclude Include="Heap.h">
       <Filter>Utility</Filter>
     </ClInclude>
-    <ClInclude Include="MenuState.h">
-      <Filter>State Stack</Filter>
-    </ClInclude>
     <ClInclude Include="State.h">
       <Filter>State Stack</Filter>
     </ClInclude>
@@ -692,9 +683,6 @@
     <ClInclude Include="DialogueSystem.h" />
     <ClInclude Include="TextRenderer.h">
       <Filter>Renderers</Filter>
-    </ClInclude>
-    <ClInclude Include="CreditsState.h">
-      <Filter>State Stack</Filter>
     </ClInclude>
     <ClInclude Include="EngineDefines.h">
       <Filter>Engine Core</Filter>

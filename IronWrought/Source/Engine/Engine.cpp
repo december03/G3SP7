@@ -60,7 +60,7 @@ CEngine::CEngine() : myRenderSceneActive(true)
 	// Audio Manager must be constructed after main singleton, since it subscribes to postmaster messages
 	myAudioManager = new CAudioManager();
 	//myActiveScene = 0; //muc bad
-	myActiveState = CStateStack::EState::MainMenu;
+	myActiveState = CStateStack::EState::InGame;
 	//myDialogueSystem = new CDialogueSystem();
 }
 

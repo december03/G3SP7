@@ -7,23 +7,14 @@ class CStateStack {
 	friend class CShowCase;
 public:
 	enum class EState {
-		BootUp,
-		TitleScreen,
-		MainMenu,
-		Credits,
-		Intro,
-		LoadLevel,
 		InGame,
-		PauseMenu,
-		Options,
-		LevelSelect,
 		NoState
 	};
 
 	CStateStack() = default;
 	~CStateStack();
 
-	bool Awake(std::initializer_list<CStateStack::EState> someStates, const EState aStartState = EState::MainMenu);
+	bool Awake(std::initializer_list<CStateStack::EState> someStates, const EState aStartState = EState::InGame);
 
 	CState* GetTop() { return myStateStack.top(); }
 	bool PushState(const EState aState);

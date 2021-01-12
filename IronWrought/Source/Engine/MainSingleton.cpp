@@ -31,8 +31,3 @@ CDialogueSystem& CMainSingleton::DialogueSystem()
 {
 	return ourInstance->myDialogueSystem;
 }
-
-CPlayerGlobalState& CMainSingleton::PlayerGlobalState()
-{
-	return ourInstance->myPlayerGlobalState;
-}

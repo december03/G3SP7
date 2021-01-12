@@ -14,7 +14,6 @@
 #include "MainSingleton.h"
 #include "rapidjson\document.h"
 #include "rapidjson\istreamwrapper.h"
-#include "..\..\Game\LoadLevelState.h"
 #include "Engine.h"
 #include "Scene.h"
 
@@ -193,22 +192,13 @@ void CCanvas::Update()
 	}
 }
 
-void CCanvas::Receive(const SMessage& aMessage)
+void CCanvas::Receive(const SMessage& /*aMessage*/)
 {
-	switch (aMessage.myMessageType)
-	{
-	case EMessageType::PlayerHealthChanged:
-		myAnimatedUIs[3]->Level(*static_cast<float*>(aMessage.data));
-		break;
-	case EMessageType::PlayerResourceChanged:
-		myAnimatedUIs[4]->Level(*static_cast<float*>(aMessage.data));
-		break;
-	case EMessageType::EnemyHealthChanged:
-		myAnimatedUIs[0]->Level(*static_cast<float*>(aMessage.data));
-		break;
-	default:
-		break;
-	}
+	//switch (aMessage.myMessageType)
+	//{
+	//default:
+	//	break;
+	//}
 }
 
 void CCanvas::SubscribeToMessages()

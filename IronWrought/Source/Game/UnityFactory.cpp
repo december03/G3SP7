@@ -11,7 +11,6 @@
 #include "AnimationComponent.h"
 #include "TransformComponent.h"
 #include "PlayerControllerComponent.h"
-#include "AbilityComponent.h"
 #include "NavMeshComponent.h"
 #include "AIBehaviorComponent.h"
 #include "CameraComponent.h"
@@ -25,11 +24,7 @@
 #include "VFXComponent.h"
 #include "StatsComponent.h"
 #include "InstancedModelComponent.h"
-#include "EnemyBehavior.h"
-#include "HealthBarComponent.h"
 #include "ParticleEmitterComponent.h"
-#include "BossBehavior.h"
-#include "LoadObjectComponent.h"
 #include "RandomNumberGenerator.h"
 
 #include "CollisionManager.h"
@@ -70,7 +65,7 @@ CUnityFactory::~CUnityFactory()
 
 }
 
-bool CUnityFactory::FillScene(const SLoadScreenData& aData, const std::vector<std::string>& someModelPaths, CScene& aScene)
+bool CUnityFactory::FillScene(const SLoadScreenData& aData, const std::vector<std::string>& /*someModelPaths*/, CScene& aScene)
 {
 	CGameObject* camera = CreateGameObject(aData.myCamera, false);
 	aScene.AddInstance(camera);
@@ -78,12 +73,6 @@ bool CUnityFactory::FillScene(const SLoadScreenData& aData, const std::vector<st
 	CGameObject* envLight = CreateGameObject(aData.myDirectionalLight);
 	aScene.AddInstance(envLight);
 	aScene.SetEnvironmentLight(envLight->GetComponent<CEnviromentLightComponent>()->GetEnviromentLight());
-	int random = Random(0, (static_cast<int>(aData.myGameObjects.size()) - 1));
-	CGameObject* loadScreenGameObject = CreateGameObject(aData.myGameObjects[random], someModelPaths[aData.myGameObjects[random].myModelIndex]);
-	loadScreenGameObject->AddComponent<CLoadObjectComponent>(*loadScreenGameObject);
-	aScene.AddInstance(loadScreenGameObject); //pls no more crash //Nico 09 dec
-
-	random = Random(0, 1);
 
 	for (auto& environmentFX : aData.myEnvironmentFXs)
 	{
@@ -120,15 +109,6 @@ bool CUnityFactory::FillScene(const SInGameData& aData, const std::vector<std::s
 	for (const auto& eventdata : aData.myEventData)
 	{
 		aScene.AddInstance(CreateGameObject(eventdata, aData.myEventStringMap.at(eventdata.myInstanceID)));
-	}
-
-	CEnemyBehavior* enemyBehavior = new CEnemyBehavior(player); // Deleted by scene
-	aScene.TakeOwnershipOfAIBehavior(enemyBehavior);
-	for (const auto& enemyData : aData.myEnemyData)
-	{
-		CGameObject* enemy = CreateGameObject(enemyData, aBinModelPaths.at(enemyData.myModelIndex), enemyBehavior, aScene);
-		aScene.AddInstance(enemy);
-		aScene.AddEnemies(enemy);
 	}
 
 	for (const auto& destructibleData : aData.myDestructibleData)
@@ -203,15 +183,6 @@ bool CUnityFactory::FillScene(const SInGameData& aData, const std::vector<std::s
 		aScene.AddInstance(CreateGameObject(particleFX, aData.myParticleFXStringMap.at(particleFX.myInstanceID)));
 	}
 
-	if (aData.myBossIsInScene > 0)
-	{
-		CBossBehavior* bossBehavior = new CBossBehavior(player, aScene, aData.myBossData.myStageOne, aData.myBossData.myStageTwo, aData.myBossData.myStageThree);
-		CGameObject* aBossGameObject = CreateGameObject(aData.myBossData, aBinModelPaths[aData.myBossData.myModelIndex], bossBehavior);
-		//aBossGameObject->AddComponent<CAIBehaviorComponent>(*aBossGameObject, bossBehavior);
-		//aBossGameObject->AddComponent<CHealthBarComponent>(*aBossGameObject, aScene, "Json/UI_InGame_Enemy_HealthBar.json");
-		aScene.AddInstance(aBossGameObject);
-		aScene.AddBoss(aBossGameObject);
-	}
 	return true;
 }
 
@@ -281,7 +252,7 @@ CGameObject* CUnityFactory::CreateGameObject(const SPlayerData& aData, const std
 	rapidjson::Document document;
 	document.ParseStream(inputWrapper);
 	gameObject->AddComponent<CStatsComponent>(
-		*gameObject, 
+		*gameObject,
 		document["Base Health"].GetFloat(),
 		document["Base Damage"].GetFloat(),
 		document["Base Movement Speed"].GetFloat(),
@@ -290,25 +261,12 @@ CGameObject* CUnityFactory::CreateGameObject(const SPlayerData& aData, const std
 		document["Base Attack Range"].GetFloat()
 		);
 
-	std::pair<EAbilityType, unsigned int> ab1 = { EAbilityType::PlayerAbility1, 1 };
-	std::pair<EAbilityType, unsigned int> ab2 = { EAbilityType::PlayerAbility2, 1 };
-	std::pair<EAbilityType, unsigned int> ab3 = { EAbilityType::PlayerAbility3, 1 };
-	std::pair<EAbilityType, unsigned int> ab4 = { EAbilityType::PlayerMelee, 1 };
-	std::pair<EAbilityType, unsigned int> ab5 = { EAbilityType::PlayerHeavyMelee, 1 };
-	std::vector<std::pair<EAbilityType, unsigned int>> abs;
-	abs.emplace_back(ab1);
-	abs.emplace_back(ab2);
-	abs.emplace_back(ab3);
-	abs.emplace_back(ab4);
-	abs.emplace_back(ab5);
-	gameObject->AddComponent<CAbilityComponent>(*gameObject, abs);
-
 	AddAnimationsToGameObject(*gameObject, aModelPath, EAnimatedObject::Player);
 
 	return gameObject;
 }
 
-CGameObject* CUnityFactory::CreateGameObject(const SEnemyData& aData, const std::string& aModelPath, IAIBehavior* aBehavior, CScene& aScene)
+CGameObject* CUnityFactory::CreateGameObject(const SEnemyData& aData, const std::string& aModelPath, IAIBehavior* aBehavior, CScene& /*aScene*/)
 {
 	static int id = 100;
 	CGameObject* gameObject = new CGameObject(id++);
@@ -325,14 +283,7 @@ CGameObject* CUnityFactory::CreateGameObject(const SEnemyData& aData, const std:
 	gameObject->myTransform->Position(aData.myPosition);
 	gameObject->myTransform->Rotation(aData.myRotation);
 
-	std::pair<EAbilityType, unsigned int> ab1 = { EAbilityType::EnemyAbility, 1 };
-	std::vector<std::pair<EAbilityType, unsigned int>> abs;
-	abs.emplace_back(ab1);
-	gameObject->AddComponent<CAbilityComponent>(*gameObject, abs);
-
 	AddAnimationsToGameObject(*gameObject, aModelPath, EAnimatedObject::Enemy);
-
-	gameObject->AddComponent<CHealthBarComponent>(*gameObject, aScene);
 
 	return gameObject;
 }
@@ -418,14 +369,6 @@ CGameObject* CUnityFactory::CreateGameObject(const SBossData& aData, const std::
 	gameObject->AddComponent<CStatsComponent>(*gameObject, aData.myHealth, aData.myDamage, aData.myMoveSpeed, aData.myDamageCooldown, aData.myVisionRange, aData.myAttackRange);
 	gameObject->AddComponent<CNavMeshComponent>(*gameObject);
 
-	std::pair<EAbilityType, unsigned int> ab1 = { EAbilityType::BossAbility1, 1 };
-	std::pair<EAbilityType, unsigned int> ab2 = { EAbilityType::BossAbility2, 1 };
-	std::pair<EAbilityType, unsigned int> ab3 = { EAbilityType::BossAbility3, 1 };
-	std::vector<std::pair<EAbilityType, unsigned int>> abs;
-	abs.emplace_back(ab1);
-	abs.emplace_back(ab2);
-	abs.emplace_back(ab3);
-	gameObject->AddComponent<CAbilityComponent>(*gameObject, abs);
 	gameObject->AddComponent<CAIBehaviorComponent>(*gameObject, aBehavior);
 
 	return gameObject;

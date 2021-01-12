@@ -2,7 +2,6 @@
 #include "InGameState.h"
 
 #include "Scene.h"
-#include "PauseState.h"
 
 #include "GameObject.h"
 #include "CameraComponent.h"
