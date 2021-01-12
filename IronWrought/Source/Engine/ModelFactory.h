@@ -12,22 +12,15 @@ class CModelFactory {
 public:
 	static CModelFactory* GetInstance();
 	bool Init(CEngine& engine);
-	CModel* GetModel(std::string aFilePath);
-	CModel* GetModelPBR(std::string aFilePath);
-
-	CModel* LoadModelPBR(std::string aFilePath);
-	CModel* LoadModel(std::string aFilePath);
-	CModel* GetCube();
-
-	CModel* GetOutlineModelSubset();
-
-	CModel* GetInstancedModel(std::string aFilePath, int aNumberOfInstanced);
-
 	void ClearFactory();
+	
+	CModel* GetModel(std::string aFilePath);
+	CModel* GetInstancedModel(std::string aFilePath, int aNumberOfInstanced);	
+	CModel* GetOutlineModelSubset();
 
 private:
 	struct SInstancedModel
-	{	
+	{
 		const std::string myModelType;
 		const int myCount;
 		size_t myModelTypeHashCode;
@@ -38,7 +31,6 @@ private:
 		{
 			myModelTypeHashCode = std::hash<std::string>()(aModelType);
 		}
-
 		bool operator< (const SInstancedModel& lhs) const
 		{
 			return std::tie(myCount, myModelTypeHashCode) < std::tie(lhs.myCount, lhs.myModelTypeHashCode);
@@ -46,15 +38,17 @@ private:
 	};
 
 private:
+	CModel* LoadModel(std::string aFilePath);
 	CModel* CreateInstancedModels(std::string aFilePath, int aNumberOfInstanced);
-	CModelFactory();
-	~CModelFactory();
-	//wchar_t* TexturePathWide(std::string aTexturePath) const;
 	ID3D11ShaderResourceView* GetShaderResourceView(ID3D11Device* aDevice, std::string aTexturePath);
 
-	std::map<std::string, CModel*> myModelMapPBR;
-	std::map<SInstancedModel, CModel*> myInstancedModelMapPBR;
+private:
+	CModelFactory();
+	~CModelFactory();
+
+private:
 	std::map<std::string, CModel*> myModelMap;
+	std::map<SInstancedModel, CModel*> myInstancedModelMap;
 	CEngine* myEngine;
 	CModel* myOutlineModelSubset;
 	static CModelFactory* ourInstance;

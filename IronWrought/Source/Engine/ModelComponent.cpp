@@ -5,7 +5,7 @@
 #include "Model.h"
 
 CModelComponent::CModelComponent(CGameObject& aParent, std::string aFBXPath) : CBehaviour(aParent) {
-	myModel = CModelFactory::GetInstance()->GetModelPBR(aFBXPath);
+	myModel = CModelFactory::GetInstance()->GetModel(aFBXPath);
 }
 
 CModelComponent::~CModelComponent()
@@ -22,7 +22,7 @@ void CModelComponent::Update()
 
 void CModelComponent::SetModel(const std::string& aFBXPath)
 {
-	myModel = CModelFactory::GetInstance()->GetModelPBR(aFBXPath);
+	myModel = CModelFactory::GetInstance()->GetModel(aFBXPath);
 }
 
 CModel* CModelComponent::GetMyModel() const
