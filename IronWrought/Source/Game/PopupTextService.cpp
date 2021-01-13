@@ -18,6 +18,7 @@
 
 #include "Scene.h"
 #include "CameraComponent.h"
+#include <EngineException.h>
 
 using namespace rapidjson;
 

@@ -26,43 +26,6 @@ struct SPointLightData
 	float myIntensity;
 };
 
-struct SPlayerData
-{
-	int myInstanceID;
-	DirectX::SimpleMath::Vector3 myPosition;
-	DirectX::SimpleMath::Vector3 myRotation;
-	DirectX::SimpleMath::Vector3 myScale;
-	int myModelIndex;
-	//Player Health osv
-};
-
-struct SEventData {
-	int myInstanceID;
-	DirectX::SimpleMath::Vector3 myPosition;
-	DirectX::SimpleMath::Vector2 myColliderData;
-	int myEvent;
-};
-
-struct SEnemyData {
-	DirectX::SimpleMath::Vector3 myPosition;
-	DirectX::SimpleMath::Vector3 myRotation;
-	DirectX::SimpleMath::Vector3 myScale;
-	float myHealth;
-	float myDamage;
-	float myMoveSpeed;
-	float myDamageCooldown;
-	float myVisionRange;
-	float myAttackRange;
-	int myModelIndex;
-};
-
-struct SDestructibleData {
-	DirectX::SimpleMath::Vector3 myPosition;
-	DirectX::SimpleMath::Vector3 myRotation;
-	DirectX::SimpleMath::Vector3 myScale;
-	int myModelIndex;
-};
-
 struct SGameObjectData
 {
 	int myInstanceID;
@@ -72,59 +35,12 @@ struct SGameObjectData
 	int myModelIndex;
 };
 
-struct SEnvironmentFXData
-{
-	int myInstanceID;
-	DirectX::SimpleMath::Vector3 myPosition;
-	DirectX::SimpleMath::Vector3 myRotation;
-	DirectX::SimpleMath::Vector3 myScale;
-};
-
-struct SParticleFXData
-{
-	int myInstanceID;
-	DirectX::SimpleMath::Vector3 myPosition;
-	DirectX::SimpleMath::Vector3 myRotation;
-};
-
-struct SBossData
-{
-	int myInstanceID;
-	int myModelIndex;
-	DirectX::SimpleMath::Vector3 myPosition;
-	DirectX::SimpleMath::Vector3 myRotation;
-	DirectX::SimpleMath::Vector3 myScale;
-	DirectX::SimpleMath::Vector2 myStageOne;
-	DirectX::SimpleMath::Vector2 myStageTwo;
-	DirectX::SimpleMath::Vector2 myStageThree;
-	float myHealth;
-	float myDamage;
-	float myMoveSpeed;
-	float myDamageCooldown;
-	float myVisionRange;
-	float myAttackRange;
-};
-
 struct SInGameData 
 {
 	SCameraData myCamera;	
 	SDirectionalLightData myDirectionalLight;
 	std::vector<SPointLightData> myPointLightData;	
-	SPlayerData myPlayerData;
-	std::vector<SEventData> myEventData;
-	std::vector<SEnemyData> myEnemyData;
-	std::vector<SDestructibleData> myDestructibleData;
-	std::vector<SGameObjectData> myGameObjects;
-	//int mySceneIndex;
-	std::vector<SEnvironmentFXData> myEnvironmentFXs;
-	std::vector<SParticleFXData> myParticleFXs;
-	int myBossIsInScene;
-	SBossData myBossData;
-	
-	std::unordered_map<int, std::string> myEventStringMap;
-	std::unordered_map<int, std::string> myEnvironmentFXStringMap;
-	std::unordered_map<int, std::vector<std::string>> myParticleFXStringMap;
-
+	std::vector<SGameObjectData> myGameObjects;	
 	std::string myBinPath;
 
 	int SizeOf()
@@ -134,7 +50,6 @@ struct SInGameData
 		size += sizeof(myDirectionalLight);
 		for (auto& light : myPointLightData)
 			size += sizeof(light);
-		size += sizeof(myPlayerData);
 		for (auto& gameObject : myGameObjects)
 			size += sizeof(gameObject);
 
@@ -148,10 +63,6 @@ struct SLoadScreenData
 	SCameraData myCamera;
 	SDirectionalLightData myDirectionalLight;
 	std::vector<SGameObjectData> myGameObjects;
-	std::vector<SParticleFXData> myParticleFXs;
-	std::vector<SEnvironmentFXData> myEnvironmentFXs;
-	std::unordered_map<int, std::string> myEnvironmentFXStringMap;
-	std::unordered_map<int, std::vector<std::string>> myParticleFXStringMap;
 
 	std::string myBinPath;
 };

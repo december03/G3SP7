@@ -1,20 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <FxCompile Include="AnimatedVertexShader.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="PixelShader.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
     <FxCompile Include="VertexShader.hlsl">
       <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="CubePixelShader.hlsl">
-      <Filter>Shaders\Cube</Filter>
-    </FxCompile>
-    <FxCompile Include="CubeVertexShader.hlsl">
-      <Filter>Shaders\Cube</Filter>
     </FxCompile>
     <FxCompile Include="FullscreenPixelShader_Bloom.hlsl">
       <Filter>Shaders\Fullscreen</Filter>
@@ -79,9 +67,6 @@
     <FxCompile Include="SpriteVFXSphericalTextureBlendingPixelShader.hlsl">
       <Filter>Shaders\Sprite</Filter>
     </FxCompile>
-    <FxCompile Include="InstancedVertexShader.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
     <FxCompile Include="SpriteVFXTexturePixelShader.hlsl">
       <Filter>Shaders\Sprite</Filter>
     </FxCompile>
@@ -100,15 +85,17 @@
     <FxCompile Include="RenderPassAmbientOcclusionPixelShader.hlsl">
       <Filter>Shaders\Render Passes</Filter>
     </FxCompile>
-    <FxCompile Include="OldPBRPixelShader.hlsl">
-      <Filter>Shaders\Old PBR-shader</Filter>
-    </FxCompile>
     <FxCompile Include="PBRPixelShader.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>Shaders\PBR</Filter>
+    </FxCompile>
+    <FxCompile Include="AnimatedVertexShader.hlsl">
+      <Filter>Shaders\Animation</Filter>
+    </FxCompile>
+    <FxCompile Include="InstancedVertexShader.hlsl">
+      <Filter>Shaders\Instanced</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TokenPool.cpp" />
     <ClCompile Include="AnimationComponent.cpp">
       <Filter>GameObject and Component\Component</Filter>
     </ClCompile>
@@ -172,13 +159,7 @@
     <ClCompile Include="CameraFactory.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>Collision</Filter>
-    </ClCompile>
     <ClCompile Include="CollisionManager.cpp">
-      <Filter>Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="IntersectionManager.cpp">
       <Filter>Collision</Filter>
     </ClCompile>
     <ClCompile Include="LightFactory.cpp">
@@ -208,9 +189,6 @@
     <ClCompile Include="ParticleFactory.cpp">
       <Filter>Particles</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleInstance.cpp">
-      <Filter>Particles</Filter>
-    </ClCompile>
     <ClCompile Include="ParticleRenderer.cpp">
       <Filter>Renderers</Filter>
     </ClCompile>
@@ -218,9 +196,6 @@
       <Filter>GameObject and Component\Component</Filter>
     </ClCompile>
     <ClCompile Include="ParticleEmitterComponent.cpp">
-      <Filter>GameObject and Component\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerControllerComponent.cpp">
       <Filter>GameObject and Component\Component</Filter>
     </ClCompile>
     <ClCompile Include="PointLightComponent.cpp">
@@ -267,9 +242,6 @@
     </ClCompile>
     <ClCompile Include="VFXInstance.cpp">
       <Filter>VFX</Filter>
-    </ClCompile>
-    <ClCompile Include="StatsComponent.cpp">
-      <Filter>GameObject and Component\Component</Filter>
     </ClCompile>
     <ClCompile Include="TransformComponent.cpp">
       <Filter>GameObject and Component\Component</Filter>
@@ -337,20 +309,11 @@
     <ClCompile Include="AStar.cpp">
       <Filter>Navmesh and Pathfinding</Filter>
     </ClCompile>
-    <ClCompile Include="NavMeshComponent.cpp">
-      <Filter>GameObject and Component\Component</Filter>
-    </ClCompile>
     <ClCompile Include="StringID.cpp">
       <Filter>StringID</Filter>
     </ClCompile>
     <ClCompile Include="StringIDLoader.cpp">
       <Filter>StringID</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraControllerComponent.cpp">
-      <Filter>GameObject and Component\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionEventComponent.cpp">
-      <Filter>GameObject and Component\Component</Filter>
     </ClCompile>
     <ClCompile Include="AnimatedUIElement.cpp">
       <Filter>Sprite</Filter>
@@ -358,14 +321,8 @@
     <ClCompile Include="AudioManager.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
-    <ClCompile Include="PopupTextService.cpp" />
-    <ClCompile Include="PerlinNoise.cpp" />
-    <ClCompile Include="DialogueSystem.cpp" />
     <ClCompile Include="TextRenderer.cpp">
       <Filter>Renderers</Filter>
-    </ClCompile>
-    <ClCompile Include="DestructibleComponent.cpp">
-      <Filter>GameObject and Component\Component</Filter>
     </ClCompile>
     <ClCompile Include="InstancedModelComponent.cpp">
       <Filter>GameObject and Component\Component</Filter>
@@ -373,16 +330,14 @@
     <ClCompile Include="animationLoader.cpp">
       <Filter>Animation</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyFactory.cpp">
-      <Filter>Unused</Filter>
+    <ClCompile Include="PerlinNoise.cpp">
+      <Filter>Utility</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectPool.cpp">
-      <Filter>Unused</Filter>
+    <ClCompile Include="Collider.cpp">
+      <Filter>GameObject and Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MouseTracker.h" />
-    <ClInclude Include="TokenPool.h" />
     <ClInclude Include="AnimationComponent.h">
       <Filter>GameObject and Component\Component</Filter>
     </ClInclude>
@@ -452,13 +407,7 @@
     <ClInclude Include="CameraFactory.h">
       <Filter>Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Collider.h">
-      <Filter>Collision</Filter>
-    </ClInclude>
     <ClInclude Include="CollisionManager.h">
-      <Filter>Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="IntersectionManager.h">
       <Filter>Collision</Filter>
     </ClInclude>
     <ClInclude Include="DebugTimerUtility.h">
@@ -494,9 +443,6 @@
     <ClInclude Include="ParticleFactory.h">
       <Filter>Particles</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleInstance.h">
-      <Filter>Particles</Filter>
-    </ClInclude>
     <ClInclude Include="ParticleRenderer.h">
       <Filter>Renderers</Filter>
     </ClInclude>
@@ -504,9 +450,6 @@
       <Filter>GameObject and Component\Component</Filter>
     </ClInclude>
     <ClInclude Include="ParticleEmitterComponent.h">
-      <Filter>GameObject and Component\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerControllerComponent.h">
       <Filter>GameObject and Component\Component</Filter>
     </ClInclude>
     <ClInclude Include="PointLightComponent.h">
@@ -553,9 +496,6 @@
     </ClInclude>
     <ClInclude Include="VFXInstance.h">
       <Filter>VFX</Filter>
-    </ClInclude>
-    <ClInclude Include="StatsComponent.h">
-      <Filter>GameObject and Component\Component</Filter>
     </ClInclude>
     <ClInclude Include="TransformComponent.h">
       <Filter>GameObject and Component\Component</Filter>
@@ -653,9 +593,6 @@
     <ClInclude Include="Funneling.h">
       <Filter>Navmesh and Pathfinding</Filter>
     </ClInclude>
-    <ClInclude Include="NavMeshComponent.h">
-      <Filter>GameObject and Component\Component</Filter>
-    </ClInclude>
     <ClInclude Include="StringID.hpp">
       <Filter>StringID</Filter>
     </ClInclude>
@@ -665,30 +602,17 @@
     <ClInclude Include="animationEnums.h">
       <Filter>Animation</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionEventComponent.h">
-      <Filter>GameObject and Component\Component</Filter>
-    </ClInclude>
     <ClInclude Include="AnimatedUIElement.h">
       <Filter>Sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraControllerComponent.h">
-      <Filter>GameObject and Component\Component</Filter>
     </ClInclude>
     <ClInclude Include="AudioManager.h">
       <Filter>Audio</Filter>
     </ClInclude>
-    <ClInclude Include="PopupTextService.h" />
-    <ClInclude Include="PerlinNoise.h" />
-    <ClInclude Include="Utility.h" />
-    <ClInclude Include="DialogueSystem.h" />
     <ClInclude Include="TextRenderer.h">
       <Filter>Renderers</Filter>
     </ClInclude>
     <ClInclude Include="EngineDefines.h">
       <Filter>Engine Core</Filter>
-    </ClInclude>
-    <ClInclude Include="DestructibleComponent.h">
-      <Filter>GameObject and Component\Component</Filter>
     </ClInclude>
     <ClInclude Include="InstancedModelComponent.h">
       <Filter>GameObject and Component\Component</Filter>
@@ -696,17 +620,20 @@
     <ClInclude Include="animationLoader.h">
       <Filter>Animation</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyFactory.h">
-      <Filter>Unused</Filter>
+    <ClInclude Include="Utility.h">
+      <Filter>Utility</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectPool.h">
-      <Filter>Unused</Filter>
+    <ClInclude Include="MouseTracker.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="PerlinNoise.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>GameObject and Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="CubeShaderStructs.hlsli">
-      <Filter>Shaders\Cube</Filter>
-    </None>
     <None Include="FullscreenShaderStructs.hlsli">
       <Filter>Shaders\Fullscreen</Filter>
     </None>
@@ -725,35 +652,20 @@
     <None Include="LineShaderStructs.hlsli">
       <Filter>Shaders\Line</Filter>
     </None>
-    <None Include="OldPBRAmbience.hlsli">
-      <Filter>Shaders\Old PBR-shader</Filter>
-    </None>
-    <None Include="OldPBRDirectionalLight.hlsli">
-      <Filter>Shaders\Old PBR-shader</Filter>
-    </None>
-    <None Include="OldSamplingFunctions.hlsli">
-      <Filter>Shaders\Old PBR-shader</Filter>
-    </None>
-    <None Include="OldMathHelpers.hlsli">
-      <Filter>Shaders\Old PBR-shader</Filter>
-    </None>
-    <None Include="OldShaderStructs.hlsli">
-      <Filter>Shaders\Old PBR-shader</Filter>
-    </None>
-    <None Include="MathHelpers.hlsli">
+    <None Include="ShaderStructs.hlsli">
       <Filter>Shaders</Filter>
     </None>
     <None Include="PBRAmbience.hlsli">
-      <Filter>Shaders</Filter>
+      <Filter>Shaders\PBR</Filter>
     </None>
     <None Include="PBRDirectionalLight.hlsli">
-      <Filter>Shaders</Filter>
+      <Filter>Shaders\PBR</Filter>
+    </None>
+    <None Include="MathHelpers.hlsli">
+      <Filter>Shaders\PBR</Filter>
     </None>
     <None Include="SamplingFunctions.hlsli">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="ShaderStructs.hlsli">
-      <Filter>Shaders</Filter>
+      <Filter>Shaders\PBR</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -823,9 +735,6 @@
     <Filter Include="Engine Core">
       <UniqueIdentifier>{e819af97-a99f-494d-8aa1-47511d4fd45e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shaders\Cube">
-      <UniqueIdentifier>{6d3c3161-2c19-43fb-bc75-c309067df938}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shaders\Fullscreen">
       <UniqueIdentifier>{4d21d2bd-0ebf-463b-8b72-815baedba604}</UniqueIdentifier>
     </Filter>
@@ -859,11 +768,14 @@
     <Filter Include="Shaders\Render Passes">
       <UniqueIdentifier>{06207d94-afdb-4cb0-94fc-33cbb94a4798}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Unused">
-      <UniqueIdentifier>{ddb86846-d8dd-4a03-a6fe-d01dc5e6c953}</UniqueIdentifier>
+    <Filter Include="Shaders\PBR">
+      <UniqueIdentifier>{ed9bc840-c5e4-4389-9833-bcec471a550a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shaders\Old PBR-shader">
-      <UniqueIdentifier>{69a517f8-dddf-46db-bcf2-554cf39ddba7}</UniqueIdentifier>
+    <Filter Include="Shaders\Animation">
+      <UniqueIdentifier>{df32f5a3-609b-4e20-9289-b9a0c2b358f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Instanced">
+      <UniqueIdentifier>{5578e42d-5b05-43eb-aa3b-36cf45d8f2d8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

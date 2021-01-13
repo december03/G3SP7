@@ -6,7 +6,6 @@ struct ID3D11DeviceContext;
 struct ID3D11Buffer;
 class CDirectXFramework;
 class CCamera;
-class CParticleInstance;
 class CGameObject;
 class CCameraComponent;
 

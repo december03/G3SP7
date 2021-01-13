@@ -10,10 +10,9 @@ class CCamera;
 class CEnvironmentLight;
 class CCollisionManager;
 class CPointLight;
-class CParticleInstance;
 class CVFXInstance;
 class CLineInstance;
-//class CSpriteInstance;
+
 class CAnimatedUIElement;
 class CTextInstance;
 class CCameraComponent;
@@ -50,7 +49,6 @@ public:
 	std::pair<unsigned int, std::array<CPointLight*, LIGHTCOUNT>> CullLights(CGameObject* aGameObject);
 	LightPair CullLightInstanced(CInstancedModelComponent* aModelType);
 
-	std::vector<CParticleInstance*> CullParticles(CCameraComponent* aMainCamera);
 	std::vector<CVFXInstance*> CullVFX(CCameraComponent* aMainCamera);
 	const std::vector<SLineTime>& CullLines() const;
 	const std::vector<CLineInstance*>& CullLineInstances() const;
@@ -67,7 +65,6 @@ public:
 	bool SetEnvironmentLight(CEnvironmentLight* anEnvironmentLight);
 	bool AddInstance(CPointLight* aPointLight);
 	bool AddInstance(CGameObject* aGameObject);
-	bool AddInstance(CParticleInstance* aParticleInstance);
 	bool AddInstance(CVFXInstance* aVFXInstance);
 	bool AddInstance(CLineInstance* aLineInstance);
 	bool AddInstance(CSpriteInstance* aSprite);
@@ -91,7 +88,6 @@ public:
 	bool DestroyGameObjects();
 	bool DestroySprites();
 	bool DestroyPointLights();
-	bool DestroyParticles();
 	bool DestroyVFXInstances();
 	bool DestroyLineInstances();
 	bool DestroyAnimatedUIElement();
@@ -134,7 +130,6 @@ private:
 	//std::vector<CEnvironmentLight*> myEnvironmentLights;
 	std::vector<CPointLight*> myLightsSortedNearestPlayer;
 	std::vector<CPointLight*> myPointLights;
-	std::vector<CParticleInstance*> myParticles;
 	std::vector<CVFXInstance*> myVFXInstances;
 	std::vector<CLineInstance*> myLineInstances;
 	std::vector<CAnimatedUIElement*> myAnimatedUIElements;

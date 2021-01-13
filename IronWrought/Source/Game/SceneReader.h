@@ -8,18 +8,38 @@ enum class EBin
 	LoadScene,
 };
 
+struct SImportedModelData {
+	Vector3 myGameObjectPosition;
+	Vector3 myGameObjectRotation;
+	Vector3 myGameObjectScale;
+	int myInstanceID;
+	int myModelIndex;
+};
+
 class CSceneReader
 {
 public:
 	CSceneReader();
 	~CSceneReader();
 
+
+	std::vector<SImportedModelData> LoadUnityScene(const std::string& aBinFilePath);
+
 	bool OpenBin(const std::string& aBinFilePath);
 
 	SInGameData& ReadInGameData();
 	SLoadScreenData& ReadLoadScreenData();
 
+
+
 private:
+
+	template<typename T>
+	size_t Read(T& aData, char* aStreamPtr)
+	{
+		memcpy(&aData, aStreamPtr, sizeof(T));
+		return sizeof(T);
+	}
 
 	template<typename T>
 	size_t Read(T& data)
@@ -27,6 +47,7 @@ private:
 		memcpy(&data, myStreamPtr, sizeof(T));
 		return sizeof(T);
 	}
+
 
 
 	template<typename T>

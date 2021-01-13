@@ -35,9 +35,9 @@ class CEngine
 	friend class CVFXFactory;
 	friend class CLightFactory;
 	friend class CRenderManager;
+	friend class CLineFactory;
 
 public:
-	friend class CLineFactory;
 	CEngine();
 	~CEngine();
 	bool Init(CWindowHandler::SWindowData& someWindowData);

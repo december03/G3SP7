@@ -1,38 +1,23 @@
 #include "stdafx.h"
 #include "UnityFactory.h"
-
 #include "Scene.h"
 #include "GameObject.h"
-#include "Engine.h"
-#include "rapidjson/document.h"
-#include "rapidjson/istreamwrapper.h"
-#include <fstream>
+
 #include "ModelComponent.h"
+#include "InstancedModelComponent.h"
 #include "AnimationComponent.h"
 #include "TransformComponent.h"
-#include "PlayerControllerComponent.h"
-#include "NavMeshComponent.h"
-#include "AIBehaviorComponent.h"
 #include "CameraComponent.h"
-#include "CameraControllerComponent.h"//Could not compile 20201124 21:05 without this
 #include "EnviromentLightComponent.h"
 #include "PointLightComponent.h"
-#include "CollisionEventComponent.h"
+
 #include "RectangleColliderComponent.h"
 #include "CircleColliderComponent.h"
-#include "DestructibleComponent.h"
-#include "VFXComponent.h"
-#include "StatsComponent.h"
-#include "InstancedModelComponent.h"
-#include "ParticleEmitterComponent.h"
-#include "RandomNumberGenerator.h"
+#include "CameraControllerComponent.h"//Could not compile 20201124 21:05 without this
 
 #include "CollisionManager.h"
 #include "LightFactory.h"
-#include "VFXFactory.h"
-#include "ParticleFactory.h"
 #include "PointLight.h"
-//#include "NavmeshLoader.h"// included in NavMeshComp
 #include "animationLoader.h"
 #include "Model.h"
 
@@ -48,12 +33,6 @@ float InverseLerp(float a, float b, float t) {
 	return (t - a) / (b - a);
 }
 
-//#define BAREBONES_SCENE
-	// Used for debugging 2020 12 05
-	// added if(NavMeshComp != nullptr) check in PlayerControllerComp
-	// commented canvas and tokenpool in InGameState
-	// commented navmesh loading in LoadLevelState
-	// commented InputMapper event subscription in PlayerControllerComp
 
 CUnityFactory::CUnityFactory()
 {
@@ -73,16 +52,6 @@ bool CUnityFactory::FillScene(const SLoadScreenData& aData, const std::vector<st
 	CGameObject* envLight = CreateGameObject(aData.myDirectionalLight);
 	aScene.AddInstance(envLight);
 	aScene.SetEnvironmentLight(envLight->GetComponent<CEnviromentLightComponent>()->GetEnviromentLight());
-
-	for (auto& environmentFX : aData.myEnvironmentFXs)
-	{
-		aScene.AddInstance(CreateGameObject(environmentFX, aData.myEnvironmentFXStringMap.at(environmentFX.myInstanceID)));
-	}
-
-	for (auto& particleFX : aData.myParticleFXs)
-	{
-		aScene.AddInstance(CreateGameObject(particleFX, aData.myParticleFXStringMap.at(particleFX.myInstanceID)));
-	}
 	return true;
 }
 
@@ -101,21 +70,6 @@ bool CUnityFactory::FillScene(const SInGameData& aData, const std::vector<std::s
 		CGameObject* pointLight = CreateGameObject(pointLightData);
 		aScene.AddInstance(pointLight);
 		aScene.AddInstance(pointLight->GetComponent<CPointLightComponent>()->GetPointLight());
-	}
-	CGameObject* player = CreateGameObject(aData.myPlayerData, aBinModelPaths[aData.myPlayerData.myModelIndex]);
-	aScene.AddInstance(player);
-	aScene.AddPlayer(player);
-
-	for (const auto& eventdata : aData.myEventData)
-	{
-		aScene.AddInstance(CreateGameObject(eventdata, aData.myEventStringMap.at(eventdata.myInstanceID)));
-	}
-
-	for (const auto& destructibleData : aData.myDestructibleData)
-	{
-		CGameObject* destructible = CreateGameObject(destructibleData, aBinModelPaths.at(destructibleData.myModelIndex));
-		aScene.AddInstance(destructible);
-		aScene.AddDestructible(destructible);
 	}
 
 	std::unordered_map<int, int> modelIndexMap;
@@ -173,16 +127,6 @@ bool CUnityFactory::FillScene(const SInGameData& aData, const std::vector<std::s
 		}
 	}
 
-	for (auto& environmentFX : aData.myEnvironmentFXs)
-	{
-		aScene.AddInstance(CreateGameObject(environmentFX, aData.myEnvironmentFXStringMap.at(environmentFX.myInstanceID)));
-	}
-
-	for (auto& particleFX : aData.myParticleFXs)
-	{
-		aScene.AddInstance(CreateGameObject(particleFX, aData.myParticleFXStringMap.at(particleFX.myInstanceID)));
-	}
-
 	return true;
 }
 
@@ -231,145 +175,4 @@ CGameObject* CUnityFactory::CreateGameObjectInstanced(const std::string& aModelP
 	CGameObject* gameObject = new CGameObject(InstancedID);
 	gameObject->AddComponent<CInstancedModelComponent>(*gameObject, aModelPath, InstancedID, aInstancedTransforms, (GetSuffixFromString(aModelPath) == "_AL"));
 	return std::move(gameObject);
-}
-
-
-CGameObject* CUnityFactory::CreateGameObject(const SPlayerData& aData, const std::string& aModelPath)
-{
-	CGameObject* gameObject = new CGameObject(aData.myInstanceID);
-	gameObject->myTransform->Scale(aData.myScale.x);
-	gameObject->myTransform->Position(aData.myPosition);
-	gameObject->myTransform->Rotation(aData.myRotation);
-	gameObject->AddComponent<CModelComponent>(*gameObject, aModelPath);
-	gameObject->AddComponent<CPlayerControllerComponent>(*gameObject);
-	gameObject->AddComponent<CNavMeshComponent>(*gameObject);
-
-	gameObject->AddComponent<CCircleColliderComponent>(*gameObject, 1.f, ECollisionLayer::PLAYER, static_cast<uint64_t>(ECollisionLayer::ALL));
-
-	std::string filePath = "Json/PlayerBaseStats.json";
-	std::ifstream inputStream(filePath);
-	rapidjson::IStreamWrapper inputWrapper(inputStream);
-	rapidjson::Document document;
-	document.ParseStream(inputWrapper);
-	gameObject->AddComponent<CStatsComponent>(
-		*gameObject,
-		document["Base Health"].GetFloat(),
-		document["Base Damage"].GetFloat(),
-		document["Base Movement Speed"].GetFloat(),
-		document["Base Damage Cooldown"].GetFloat(),
-		document["Base Vision Range"].GetFloat(),
-		document["Base Attack Range"].GetFloat()
-		);
-
-	AddAnimationsToGameObject(*gameObject, aModelPath, EAnimatedObject::Player);
-
-	return gameObject;
-}
-
-CGameObject* CUnityFactory::CreateGameObject(const SEnemyData& aData, const std::string& aModelPath, IAIBehavior* aBehavior, CScene& /*aScene*/)
-{
-	static int id = 100;
-	CGameObject* gameObject = new CGameObject(id++);
-	gameObject->AddComponent<CModelComponent>(*gameObject, aModelPath);
-	auto stats = gameObject->AddComponent<CStatsComponent>(*gameObject, aData.myHealth, aData.myDamage, aData.myMoveSpeed, aData.myDamageCooldown, aData.myVisionRange, aData.myAttackRange, 6.0f);
-	float sizePercent = InverseLerp(15.0f, 100.0f, stats->GetBaseStats().myBaseHealth);
-	float size = Lerp(0.0f, 1.0f, sizePercent * sizePercent) + 1.0f;
-	gameObject->myTransform->Scale(size);
-
-	gameObject->AddComponent<CCircleColliderComponent>(*gameObject, 0.3f * size, ECollisionLayer::ENEMY, static_cast<uint64_t>(ECollisionLayer::PLAYER));
-	gameObject->AddComponent<CAIBehaviorComponent>(*gameObject, aBehavior);
-	gameObject->AddComponent<CNavMeshComponent>(*gameObject);
-
-	gameObject->myTransform->Position(aData.myPosition);
-	gameObject->myTransform->Rotation(aData.myRotation);
-
-	AddAnimationsToGameObject(*gameObject, aModelPath, EAnimatedObject::Enemy);
-
-	return gameObject;
-}
-
-CGameObject* CUnityFactory::CreateGameObject(const SEventData& aData, const std::string anEventString)
-{
-	CGameObject* gameObject = new CGameObject(aData.myInstanceID);
-	gameObject->myTransform->Position(aData.myPosition);
-	gameObject->AddComponent<CCollisionEventComponent>(*gameObject,
-		static_cast<EMessageType>(aData.myEvent),
-		anEventString);
-
-	gameObject->AddComponent<CRectangleColliderComponent>(*gameObject,
-		aData.myColliderData.x,
-		aData.myColliderData.y,
-		ECollisionLayer::EVENT,
-		static_cast<uint64_t>(ECollisionLayer::PLAYER));
-
-	return gameObject;
-}
-
-CGameObject* CUnityFactory::CreateGameObject(const SDestructibleData& aData, const std::string& aModelPath)
-{
-	static int id = 1000;
-	CGameObject* gameObject = new CGameObject(id++);
-	gameObject->myTransform->Position(aData.myPosition);
-	gameObject->myTransform->Rotation(aData.myRotation);
-	gameObject->AddComponent<CModelComponent>(*gameObject, aModelPath);
-	gameObject->AddComponent<CCircleColliderComponent>(*gameObject, 0.5f, ECollisionLayer::ALL, static_cast<uint64_t>(ECollisionLayer::PLAYER));
-	gameObject->AddComponent<CDestructibleComponent>(*gameObject);
-
-	AddAnimationsToGameObject(*gameObject, aModelPath, EAnimatedObject::Destructible);
-
-	return gameObject;
-}
-
-CGameObject* CUnityFactory::CreateGameObject(const SEnvironmentFXData& aData, std::string aEnvironmentFXName)
-{
-	CGameObject* gameObject = new CGameObject(aData.myInstanceID);
-	gameObject->myTransform->Position(aData.myPosition);
-	gameObject->myTransform->Rotation(aData.myRotation);
-	gameObject->myTransform->Scale(aData.myScale.x);
-
-	std::string jsonPath = "json/VFXData_";
-	jsonPath.append(aEnvironmentFXName.c_str());
-	jsonPath.append(".json");
-	gameObject->AddComponent<CVFXComponent>(*gameObject)->Init(CVFXFactory::GetInstance()->GetVFXBaseSet({ jsonPath }));
-
-	return gameObject;
-}
-
-CGameObject* CUnityFactory::CreateGameObject(const SParticleFXData& aData, const std::vector<std::string>& somParticleFXNames)
-{
-	CGameObject* gameObject = new CGameObject(aData.myInstanceID);
-	gameObject->myTransform->Position(aData.myPosition);
-	gameObject->myTransform->Rotation(aData.myRotation);
-
-	std::vector<std::string> myjsonPaths;
-	myjsonPaths.reserve(somParticleFXNames.size());
-	for (const std::string& str : somParticleFXNames)
-	{
-		std::string jsonPath = "json/";
-		jsonPath.append(str.c_str());
-		jsonPath.append(".json");
-		myjsonPaths.emplace_back(jsonPath);
-	}
-
-	gameObject->AddComponent<CParticleEmitterComponent>(*gameObject)->Init(CParticleFactory::GetInstance()->GetParticleSet(myjsonPaths));
-	return gameObject;
-	return nullptr;
-}
-
-CGameObject* CUnityFactory::CreateGameObject(const SBossData& aData, const std::string& aModelPath, IAIBehavior* aBehavior)
-{
-	CGameObject* gameObject = new CGameObject(aData.myInstanceID);
-	gameObject->myTransform->Position(aData.myPosition);
-	gameObject->myTransform->Rotation(aData.myRotation);
-	gameObject->myTransform->Scale(aData.myScale.x);
-	gameObject->AddComponent<CModelComponent>(*gameObject, aModelPath);
-	AddAnimationsToGameObject(*gameObject, aModelPath, EAnimatedObject::Boss);
-
-	gameObject->AddComponent<CCircleColliderComponent>(*gameObject, 0.5f, ECollisionLayer::ENEMY, static_cast<int>(ECollisionLayer::PLAYER)); //todo more flags
-	gameObject->AddComponent<CStatsComponent>(*gameObject, aData.myHealth, aData.myDamage, aData.myMoveSpeed, aData.myDamageCooldown, aData.myVisionRange, aData.myAttackRange);
-	gameObject->AddComponent<CNavMeshComponent>(*gameObject);
-
-	gameObject->AddComponent<CAIBehaviorComponent>(*gameObject, aBehavior);
-
-	return gameObject;
 }

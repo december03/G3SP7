@@ -30,7 +30,8 @@ void CNavMeshComponent::Start()
 
 void CNavMeshComponent::Update()
 {
-	GameObject().myTransform->MoveAlongPath();
+	//2020-01-12 "Set Path" Refactor into a NavMeshComponent (Like this one!)
+	//GameObject().myTransform->MoveAlongPath();
 }
 
 void CNavMeshComponent::OnEnable()
@@ -61,7 +62,8 @@ void CNavMeshComponent::CalculatePath(DirectX::SimpleMath::Vector3 aDestination)
 	}
 
 	path = CAStar::GetInstance()->GetPath(startPosition, aDestination, myNavMesh, startTriangle, myNavMesh->GetTriangleAtPoint(aDestination));
-	this->GameObject().myTransform->SetPath(path, aDestination);
+	//2020-01-12 "Set Path" Refactor into a NavMeshComponent (Like this one!)
+	//this->GameObject().myTransform->SetPath(path, aDestination);
 }
 
 void CNavMeshComponent::CalculatePath()
@@ -93,7 +95,8 @@ void CNavMeshComponent::CalculatePath()
 			std::vector<DirectX::SimpleMath::Vector3> path = 
 				CAStar::GetInstance()->GetPath(startPosition, finalPosition, myNavMesh, startTriangle, triangle);
 			
-			this->GameObject().myTransform->SetPath(path, finalPosition);
+			//2020-01-12 "Set Path" Refactor into a NavMeshComponent (Like this one!)
+			//this->GameObject().myTransform->SetPath(path, finalPosition);
 			break;
 		}
 	}

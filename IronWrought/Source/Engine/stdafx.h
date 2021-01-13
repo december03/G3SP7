@@ -1,43 +1,69 @@
 #pragma once
-#include "WindowHandler.h"
+//Windows API
 #include "WinInclude.h"
 
+//C++
 #include <comdef.h>
 #include <d3d11.h>
-
 #include <codecvt>
 #include <cstdarg>
 #include <iostream>
-
-#include <SimpleMath.h>
 #include <fstream>
 #include <vector>
-#include <unordered_map>
 #include <string>
-#include <map>
-#include <array>
+
+
+//DirectXTK
+#include <DDSTextureLoader.h>
+#include <SimpleMath.h>
+using namespace DirectX::SimpleMath;
+
+//Utility
 #include "Input.h"
 #include "Timer.h"
-#include "DirectXFramework.h"
 #include "EngineException.h"
-#include "GameObject.h"
-#include "Component.h"
-#include "Behaviour.h"
-#include "Collider.h"
+#include "ModelMath.h"
+#include "JsonReader.h"
+#include "Utility.h"
+
+//Engine
+#include "DirectXFramework.h"
+#include "WindowHandler.h"
+#include "EngineDefines.h"
+
+//Lights
+#include "EnvironmentLight.h"
+#include "PointLight.h"
 #include "LightFactory.h"
-#include "ModelFactory.h"
-#include "LineFactory.h"
-#include "CameraFactory.h"
-#include "FullscreenTextureFactory.h"
-#include "EnemyFactory.h"
-#include "ParticleFactory.h"
-#include "SpriteFactory.h"
-#include "TextFactory.h"
-#include "Scene.h"
-#include "StateStack.h"
-#include "State.h"
 
-#define SAFE_DELETE(aPointer) delete aPointer; aPointer = nullptr;
+//Components
+#include "TransformComponent.h"
 
-//namesapce SM = DirectX::SimpleMath;
-using namespace DirectX::SimpleMath;
+//Singleton
+#include "MainSingleton.h"
+
+//Audio
+#include "Audio.h"
+#include "AudioChannel.h"
+#include "FMod.h"
+
+
+//When Completed
+//#include "Engine.h"
+//#include "Scene.h"
+
+//#include "PostMaster.h"
+
+//#include "CTextInstance.h" <-- Changed to Component
+//#include "CSpriteInstance.h" <-- Changed to Component
+//#include "CVFXInstance.h" <-- Changed to Component
+//#include "CParticleComponent.h"
+
+//#include "CollisionManager.h"
+
+//#include "FModWrapper.h"
+
+//#include "PopupTextService.h"
+//#include "DialogueSystem.h"
+
+

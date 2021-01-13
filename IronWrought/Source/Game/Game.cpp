@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "Game.h"
-
 #include "InGameState.h"
-#include "MainSingleton.h"
-#include "PostMaster.h"
+
+//#include "MainSingleton.h"
+//#include "PostMaster.h"
 
 #ifdef _DEBUG
 #pragma comment(lib, "Engine_Debug.lib")

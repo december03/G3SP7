@@ -42,7 +42,7 @@ void CParticleEmitterComponent::Update()
 	DirectX::SimpleMath::Vector3 scale;
 	DirectX::SimpleMath::Quaternion quat;
 	DirectX::SimpleMath::Vector3 translation;
-	GameObject().myTransform->GetMatrix().Decompose(scale, quat, translation);
+	GameObject().myTransform->Transform().Decompose(scale, quat, translation);
 	SetRotation(quat);
 	//GameObject().myTransform->Position(gameObjectPos);
 	Update(CEngine::GetInstance()->GetActiveScene().GetMainCamera()->GameObject().myTransform->Position());

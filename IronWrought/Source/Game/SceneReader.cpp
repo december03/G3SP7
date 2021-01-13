@@ -23,6 +23,22 @@ CSceneReader::~CSceneReader()
 	myInGameData.clear();
 }
 
+std::vector<SImportedModelData> CSceneReader::LoadUnityScene(const std::string& /*aBinFilePath*/)
+{
+	//std::ifstream stream;
+	//stream.open(aBinFilePath);
+	////assert(stream.is_open() && "Bin File %s Failed to open", aBinFilePath);
+
+	//std::string binaryData((std::istreambuf_iterator<char>(myStream)), std::istreambuf_iterator<char>());
+	//char* streamPtr = &binaryData[0];
+
+	//Read Header
+	/*int header = 0;
+	header = Read(header, streamPtr);*/
+
+	return std::vector<SImportedModelData>();
+}
+
 bool CSceneReader::OpenBin(const std::string& aBinFilePath)
 {
 	myCurrentBinPath = aBinFilePath;
@@ -73,55 +89,9 @@ SInGameData& CSceneReader::ReadInGameData()
 		myInGameData.back()->myPointLightData.emplace_back(pointLightData);
 	}
 
-	int playerIsInScene = 0;
-	myStreamPtr += Read(playerIsInScene);
-	if (playerIsInScene == 1)
-	{
-		SPlayerData playerData = {};
-		myStreamPtr += Read(playerData);
-		myInGameData.back()->myPlayerData = playerData;
-	}
-
-	int eventDataCount = 0;
-	myStreamPtr += Read(eventDataCount);
-	assert(eventDataCount < 1000 && "Something went wrong when reading EventData");
-	myInGameData.back()->myEventData.reserve(eventDataCount);
-	for (int i = 0; i < eventDataCount; ++i) {
-		SEventData evenData = {};
-		myStreamPtr += Read(evenData);
-
-		std::string eventString = "";
-		eventString = ReadStringAuto();
-		myInGameData.back()->myEventStringMap[evenData.myInstanceID] = std::string(eventString); //Neccesary to Copy here
-		myInGameData.back()->myEventData.emplace_back(evenData);
-	}
-
-	int enemyDataCount = 0;
-	myStreamPtr += Read(enemyDataCount);
-	assert(enemyDataCount < 1000 && "Something went wrong when reading EnemyData");
-	myInGameData.back()->myEnemyData.reserve(enemyDataCount);
-	for (int i = 0; i < enemyDataCount; ++i) {
-		SEnemyData enemyData = {};
-		myStreamPtr += Read(enemyData);
-		myInGameData.back()->myEnemyData.emplace_back(enemyData);
-	}
-
-	int destructibleDataCount = 0;
-	myStreamPtr += Read(destructibleDataCount);
-	assert(destructibleDataCount < 1000 && "Something went wrong when reading DestructibleData");
-	myInGameData.back()->myDestructibleData.reserve(destructibleDataCount);
-	for (int i = 0; i < destructibleDataCount; ++i)
-	{
-		SDestructibleData destructibleData = {};
-		myStreamPtr += Read(destructibleData);
-		myInGameData.back()->myDestructibleData.emplace_back(destructibleData);
-	}
-
 	int myGameObjectDataCount = 0;
 	myStreamPtr += Read(myGameObjectDataCount);
-
 	assert(myGameObjectDataCount < 100000 && "Something went wrong when reading GameObjectData");
-
 	myInGameData.back()->myGameObjects.reserve(myGameObjectDataCount);
 	for (int i = 0; i < myGameObjectDataCount; ++i)
 	{
@@ -130,47 +100,6 @@ SInGameData& CSceneReader::ReadInGameData()
 		myInGameData.back()->myGameObjects.emplace_back(gameObjectData);
 	}
 
-	int myEnvironmentFXCount = 0;
-	myStreamPtr += Read(myEnvironmentFXCount);
-	for (int i = 0; i < myEnvironmentFXCount; ++i)
-	{
-		SEnvironmentFXData data = {};
-		myStreamPtr += Read(data);
-		
-		std::string jsonName = "";
-		jsonName = ReadStringAuto();
-		
-		myInGameData.back()->myEnvironmentFXs.emplace_back(data);
-		myInGameData.back()->myEnvironmentFXStringMap[data.myInstanceID] = std::string(jsonName);
-	}
-
-	int myParticleFXCount = 0;
-	myStreamPtr += Read(myParticleFXCount);
-	for (int i = 0; i < myParticleFXCount; ++i)
-	{
-		SParticleFXData data = {};
-		myStreamPtr += Read(data);
-
-		myInGameData.back()->myParticleFXs.emplace_back(data);
-
-		int myJsonNameCount = 0;
-		myStreamPtr += Read(myJsonNameCount);
-
-		for (int j = 0; j < myJsonNameCount; ++j)
-		{	
-			std::string jsonName = "";
-			jsonName = ReadStringAuto();
-			myInGameData.back()->myParticleFXStringMap[data.myInstanceID].emplace_back(std::string(jsonName));
-		}
-	}
-
-	myStreamPtr += Read(myInGameData.back()->myBossIsInScene);
-	if (myInGameData.back()->myBossIsInScene > 0)
-	{
-		SBossData data = {};
-		myStreamPtr += Read(data);
-		myInGameData.back()->myBossData = data;
-	}
 
 	myStream.close();
 	myStreamPtr = nullptr;
@@ -210,25 +139,6 @@ SLoadScreenData& CSceneReader::ReadLoadScreenData()
 	unsigned int pointLightcount = 0;
 	myStreamPtr += Read(pointLightcount);
 
-	unsigned int isPlayerInScene = 0;
-	myStreamPtr += Read(isPlayerInScene);
-
-	unsigned int eventDataCount = 0;
-	myStreamPtr += Read(eventDataCount);
-
-	unsigned int enemyDataCount = 0;
-	myStreamPtr += Read(enemyDataCount);
-
-	unsigned int destructible = 0;
-	myStreamPtr += Read(destructible);
-
-	//unsigned int gameObjectCount = 0;
-	//myStreamPtr += Read(gameObjectCount);
-	
-	/*SGameObjectData gameObjectData = {};
-	myStreamPtr += Read(gameObjectData);
-	myLoadScreenData.back()->myGameObject = gameObjectData;*/
-
 	int myGameObjectDataCount = 0;
 	myStreamPtr += Read(myGameObjectDataCount);
 
@@ -240,40 +150,6 @@ SLoadScreenData& CSceneReader::ReadLoadScreenData()
 		SGameObjectData gameObjectData = { 0 };
 		myStreamPtr += Read(gameObjectData);
 		myLoadScreenData.back()->myGameObjects.emplace_back(gameObjectData);
-	}
-
-	int myEnvironmentFXCount = 0;
-	myStreamPtr += Read(myEnvironmentFXCount);
-	for (int i = 0; i < myEnvironmentFXCount; ++i)
-	{
-		SEnvironmentFXData data = {};
-		myStreamPtr += Read(data);
-
-		std::string jsonName = "";
-		jsonName = ReadStringAuto();
-
-		myLoadScreenData.back()->myEnvironmentFXs.emplace_back(data);
-		myLoadScreenData.back()->myEnvironmentFXStringMap[data.myInstanceID] = std::string(jsonName);
-	}
-
-	int myParticleFXCount = 0;
-	myStreamPtr += Read(myParticleFXCount);
-	for (int i = 0; i < myParticleFXCount; ++i)
-	{
-		SParticleFXData data = {};
-		myStreamPtr += Read(data);
-
-		myLoadScreenData.back()->myParticleFXs.emplace_back(data);
-
-		int myJsonNameCount = 0;
-		myStreamPtr += Read(myJsonNameCount);
-
-		for (int j = 0; j < myJsonNameCount; ++j)
-		{
-			std::string jsonName = "";
-			jsonName = ReadStringAuto();
-			myLoadScreenData.back()->myParticleFXStringMap[data.myInstanceID].emplace_back(std::string(jsonName));
-		}
 	}
 
 	myStream.close();

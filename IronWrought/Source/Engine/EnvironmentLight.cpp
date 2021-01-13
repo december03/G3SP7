@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "EnvironmentLight.h"
-#include "DirectXFramework.h"
-#include <SimpleMath.h>
-#include <DDSTextureLoader.h>
+
 
 CEnvironmentLight::CEnvironmentLight()
 {

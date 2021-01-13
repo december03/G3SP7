@@ -2,7 +2,6 @@
 
 class CCameraComponent;
 class CGameObject;
-class CPlayerControllerComponent;
 
 class CCameraControllerComponent : public CComponent
 {
@@ -30,7 +29,6 @@ private:
 	ECameraMode myCameraMode;
 	float myCameraMoveSpeed;
 	CCameraComponent* myCamera;
-	CPlayerControllerComponent* myPlayer;
 	DirectX::SimpleMath::Vector3 myOffset;
 
 	float myMouseRotationSpeed;

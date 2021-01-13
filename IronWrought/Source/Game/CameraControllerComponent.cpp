@@ -4,8 +4,6 @@
 #include "TransformComponent.h"
 #include "Engine.h"
 #include "Scene.h"
-//#include "GameObject.h"
-#include "PlayerControllerComponent.h"
 
 #define PI 3.14159265f
 
@@ -15,7 +13,6 @@ CCameraControllerComponent::CCameraControllerComponent(CGameObject& aGameObject,
 	myCamera(nullptr),
 	myCameraMode(aCameraMode),
 	myToggleFreeCam(aToggleFreeCam),
-	myPlayer(nullptr),
 	myOffset(aOffset),
 	myMouseRotationSpeed(120.0f),
 	myPitch(0.0f),
@@ -30,7 +27,6 @@ CCameraControllerComponent::~CCameraControllerComponent()
 void CCameraControllerComponent::Awake()
 {
 	myCamera = CEngine::GetInstance()->GetActiveScene().GetMainCamera();
-	myPlayer = CEngine::GetInstance()->GetActiveScene().FindObjectOfType<CPlayerControllerComponent>();
 }
 
 void CCameraControllerComponent::Start()

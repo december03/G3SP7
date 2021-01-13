@@ -129,14 +129,10 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraComponent.h" />
-    <ClInclude Include="CameraControllerComponent.h" />
     <ClInclude Include="CameraFactory.h" />
     <ClInclude Include="Canvas.h" />
     <ClInclude Include="CapsuleColliderComponent.h" />
     <ClInclude Include="Collider.h" />
-    <ClInclude Include="CollisionEventComponent.h" />
-    <ClInclude Include="DestructibleComponent.h" />
-    <ClInclude Include="DialogueSystem.h" />
     <ClInclude Include="EngineDefines.h" />
     <ClInclude Include="FMod.h" />
     <ClInclude Include="CircleColliderComponent.h" />
@@ -151,21 +147,16 @@
     <ClInclude Include="MainSingleton.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="MessageType.h" />
-    <ClInclude Include="NavMeshComponent.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="PerlinNoise.h" />
     <ClInclude Include="PointLightComponent.h" />
-    <ClInclude Include="PopupTextService.h" />
     <ClInclude Include="PostMaster.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="DL_Debug.h" />
     <ClInclude Include="DL_StackWalker.h" />
-    <ClInclude Include="EnemyFactory.h" />
     <ClInclude Include="InputMapper.h" />
     <ClInclude Include="InputObserver.h" />
-    <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="ParticleEmitterComponent.h" />
-    <ClInclude Include="PlayerControllerComponent.h" />
     <ClInclude Include="RectangleColliderComponent.h" />
     <ClInclude Include="StackWalker.h" />
     <ClInclude Include="State.h" />
@@ -181,7 +172,6 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Heap.h" />
     <ClInclude Include="Input.h" />
-    <ClInclude Include="IntersectionManager.h" />
     <ClInclude Include="LightFactory.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="LineFactory.h" />
@@ -195,7 +185,6 @@
     <ClInclude Include="NavmeshLoader.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleFactory.h" />
-    <ClInclude Include="ParticleInstance.h" />
     <ClInclude Include="ParticleRenderer.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="RandomNumberGenerator.h" />
@@ -207,7 +196,6 @@
     <ClInclude Include="SpriteInstance.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="StateStack.h" />
-    <ClInclude Include="StatsComponent.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StringID.hpp" />
     <ClInclude Include="StringIDLoader.h" />
@@ -216,7 +204,6 @@
     <ClInclude Include="TextInstance.h" />
     <ClInclude Include="TextRenderer.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="TokenPool.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="TriangleColliderComponent.h" />
     <ClInclude Include="Utility.h" />
@@ -240,14 +227,10 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
-    <ClCompile Include="CameraControllerComponent.cpp" />
     <ClCompile Include="CameraFactory.cpp" />
     <ClCompile Include="Canvas.cpp" />
     <ClCompile Include="CapsuleColliderComponent.cpp" />
     <ClCompile Include="Collider.cpp" />
-    <ClCompile Include="CollisionEventComponent.cpp" />
-    <ClCompile Include="DestructibleComponent.cpp" />
-    <ClCompile Include="DialogueSystem.cpp" />
     <ClCompile Include="FMod.cpp" />
     <ClCompile Include="CircleColliderComponent.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
@@ -255,19 +238,14 @@
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="DL_Debug.cpp" />
     <ClCompile Include="DL_StackWalker.cpp" />
-    <ClCompile Include="EnemyFactory.cpp" />
     <ClCompile Include="FModWrapper.cpp" />
     <ClCompile Include="EnviromentLightComponent.cpp" />
     <ClCompile Include="InputMapper.cpp" />
     <ClCompile Include="InstancedModelComponent.cpp" />
     <ClCompile Include="MainSingleton.cpp" />
-    <ClCompile Include="NavMeshComponent.cpp" />
-    <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="ParticleEmitterComponent.cpp" />
     <ClCompile Include="PerlinNoise.cpp" />
-    <ClCompile Include="PlayerControllerComponent.cpp" />
     <ClCompile Include="PointLightComponent.cpp" />
-    <ClCompile Include="PopupTextService.cpp" />
     <ClCompile Include="PostMaster.cpp" />
     <ClCompile Include="RectangleColliderComponent.cpp" />
     <ClCompile Include="StackWalker.cpp" />
@@ -281,7 +259,6 @@
     <ClCompile Include="FullscreenTextureFactory.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Input.cpp" />
-    <ClCompile Include="IntersectionManager.cpp" />
     <ClCompile Include="LightFactory.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="LineFactory.cpp" />
@@ -293,7 +270,6 @@
     <ClCompile Include="NavmeshLoader.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleFactory.cpp" />
-    <ClCompile Include="ParticleInstance.cpp" />
     <ClCompile Include="ParticleRenderer.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="RenderManager.cpp" />
@@ -304,7 +280,6 @@
     <ClCompile Include="SpriteInstance.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="StateStack.cpp" />
-    <ClCompile Include="StatsComponent.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -316,7 +291,6 @@
     <ClCompile Include="TextInstance.cpp" />
     <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="TokenPool.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
     <ClCompile Include="TriangleColliderComponent.cpp" />
     <ClCompile Include="VFXBase.cpp" />
@@ -332,16 +306,6 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
-    </FxCompile>
-    <FxCompile Include="CubePixelShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
-    </FxCompile>
-    <FxCompile Include="CubeVertexShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="FullscreenPixelShader_Bloom.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
@@ -425,21 +389,9 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="OldPBRPixelShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
-    </FxCompile>
     <FxCompile Include="PBRPixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="PixelShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="RenderPassAmbientOcclusionPixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -511,16 +463,10 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="CubeShaderStructs.hlsli" />
     <None Include="FullscreenShaderStructs.hlsli" />
     <None Include="LineShaderStructs.hlsli" />
     <None Include="MathHelpers.hlsli" />
-    <None Include="OldMathHelpers.hlsli" />
     <None Include="ParticleShaderStructs.hlsli" />
-    <None Include="OldPBRAmbience.hlsli" />
-    <None Include="OldPBRDirectionalLight.hlsli" />
-    <None Include="OldSamplingFunctions.hlsli" />
-    <None Include="OldShaderStructs.hlsli" />
     <None Include="PBRAmbience.hlsli" />
     <None Include="PBRDirectionalLight.hlsli" />
     <None Include="SamplingFunctions.hlsli" />

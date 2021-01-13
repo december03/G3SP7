@@ -24,7 +24,6 @@
 #include "Debug.h"
 #include <ScreenGrab.h>
 #include <wincodec.h>
-#include "EnemyFactory.h"
 #include "DL_Debug.h"
 #include "MainSingleton.h"
 #include "AudioManager.h"

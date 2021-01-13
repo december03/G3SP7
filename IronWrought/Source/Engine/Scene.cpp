@@ -8,7 +8,6 @@
 #include "Camera.h"
 #include "CollisionManager.h"
 #include "PointLight.h"
-#include "ParticleInstance.h"
 #include "VFXInstance.h"
 #include "LineInstance.h"
 #include "SpriteInstance.h"
@@ -60,24 +59,13 @@ CScene::CScene()
 
 CScene::~CScene()
 {
-	//ourInstance = nullptr;
 	myMainCamera = nullptr;
-
-	//delete myCollisionManager;
-	//myCollisionManager = nullptr;
-
 	delete myEnvironmentLight;
 	myEnvironmentLight = nullptr;
 
 	this->DestroyGameObjects();
-	//this->DestroySprites();// Canvas seems to delete its own sprites and so does AnimatedUIElement
 	this->DestroyPointLights();
-	this->DestroyParticles();
 	this->DestroyVFXInstances();
-	//this->DestroyLineInstances();// Taken care of in Canvas
-	//this->DestroyAnimatedUIElement();// Taken care of in Canvas
-	//this->DestroyTextInstances();// Taken care of in Canvas
-
 	// This must be deleted after gameobjects have let go of their pointer to it
 
 	if (myEnemyBehavior)
@@ -308,14 +296,6 @@ LightPair CScene::CullLightInstanced(CInstancedModelComponent* aModelType)
 	return pointLightPair;
 }
 
-std::vector<CParticleInstance*> CScene::CullParticles(CCameraComponent* aMainCamera)
-{
-	for (unsigned int i = 0; i < myParticles.size(); ++i)
-	{
-		myParticles[i]->Update(CTimer::Dt(), aMainCamera->GameObject().myTransform->Position());
-	}
-	return myParticles;
-}
 
 std::vector<CVFXInstance*> CScene::CullVFX(CCameraComponent* /*aMainCamera*/)
 {
@@ -422,12 +402,6 @@ bool CScene::AddInstance(CPointLight* aPointLight)
 bool CScene::AddInstance(CGameObject* aGameObject)
 {
 	myGameObjects.emplace_back(aGameObject);
-	return true;
-}
-
-bool CScene::AddInstance(CParticleInstance* aParticleInstance)
-{
-	myParticles.emplace_back(aParticleInstance);
 	return true;
 }
 
@@ -592,17 +566,6 @@ bool CScene::DestroyPointLights()
 	}
 	myPointLights.clear();
 	return true;
-}
-
-bool CScene::DestroyParticles()
-{
-	for (auto& particle : myParticles)
-	{
-		delete particle;
-		particle = nullptr;
-	}
-	myParticles.clear();
-	return false;
 }
 
 bool CScene::DestroyVFXInstances()

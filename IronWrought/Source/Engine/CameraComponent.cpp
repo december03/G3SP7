@@ -3,6 +3,7 @@
 #include "RandomNumberGenerator.h"
 #include "TransformComponent.h"
 #include "SpriteInstance.h"
+#include "SpriteFactory.h"
 
 #include "Engine.h"
 #include "Scene.h"

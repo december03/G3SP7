@@ -1,9 +1,6 @@
 #include "stdafx.h"
 #include "LightFactory.h"
-#include <DDSTextureLoader.h>
 #include "Engine.h"
-#include "EnvironmentLight.h"
-#include "PointLight.h"
 
 CLightFactory* CLightFactory::ourInstance = nullptr;
 CLightFactory* CLightFactory::GetInstance()
