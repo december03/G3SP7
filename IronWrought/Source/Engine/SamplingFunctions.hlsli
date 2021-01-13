@@ -11,6 +11,29 @@ PixelOutPut PixelShader_Color(VertexToPixel input)
     return output;
 }
 
+float PixelShader_DetailNormalStrength(VertexToPixel input)
+{
+    float output = materialTexture.Sample(defaultSampler, input.myUV.xy).a;
+    return output;
+}
+
+PixelOutPut PixelShader_DetailNormal(VertexToPixel input)
+{
+    float tilingModifier = 4.0f; // eq to scale
+   
+    float3 normal;
+    normal.xy = detailNormals[0].Sample(defaultSampler, input.myUV.xy * tilingModifier).ag;
+    normal.z = 0.0f;
+    normal = (normal * 2.0f) - 1.0f;
+    normal.z = sqrt(1 - saturate((normal.x * normal.x) + (normal.y * normal.y)));
+    normal = normalize(normal);
+    
+    PixelOutPut output;
+    output.myColor.xyz = normal.xyz;
+    output.myColor.a = 1.0f;
+    return output;
+}
+
 PixelOutPut PixelShader_Normal(VertexToPixel input)
 {    
     float3 normal; 
@@ -19,10 +42,6 @@ PixelOutPut PixelShader_Normal(VertexToPixel input)
     normal = (normal * 2.0f) - 1.0f;
     normal.z = sqrt(1 - saturate((normal.x * normal.x) + (normal.y * normal.y)));
     //normal = (normal * 0.5f) + 0.5f;// Found in TGA modelviewer shader code, but seems to cause issues here.
-    normal = normalize(normal);
-
-    float3x3 tangentSpaceMatrix = float3x3(normalize(input.myTangent.xyz), normalize(input.myBiNormal.xyz), normalize(input.myNormal.xyz));
-    normal = mul(normal.xyz, tangentSpaceMatrix);
     normal = normalize(normal);
     
     PixelOutPut output;

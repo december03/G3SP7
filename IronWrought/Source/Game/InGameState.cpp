@@ -63,9 +63,15 @@ void CInGameState::Start()
 
 	CGameObject* chest = new CGameObject(1337);
 	chest->AddComponent<CModelComponent>(*chest, "Assets/3D/Exempel_Modeller/Chest/Particle_Chest.fbx");
-	chest->GetComponent<CTransformComponent>()->Position({0.0f,0.0f,0.0f});
+	chest->GetComponent<CTransformComponent>()->Position({15.0f,0.0f,0.0f});
+
+	CGameObject* dn = new CGameObject(1338);
+	dn->AddComponent<CModelComponent>(*dn, "Assets/3D/Exempel_Modeller/DetailNormals/Tufted_Leather/tufted_leather_dn.fbx");
+	dn->GetComponent<CTransformComponent>()->Position({0.0f,0.0f,0.0f});
+	dn->GetComponent<CTransformComponent>()->Scale(100.0f);
 
 	scene->AddInstance(chest);
+	scene->AddInstance(dn);
 
 	myExitLevel = false;
 

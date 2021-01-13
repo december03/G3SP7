@@ -264,6 +264,7 @@ FodyWeavers.xsd
 
 IronWrought/Bin/DebugLogs/
 TGA_Modelviewer/
+DeferredRenderer/
 
 *.cso 
 

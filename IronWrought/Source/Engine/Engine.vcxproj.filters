@@ -667,6 +667,9 @@
     <None Include="SamplingFunctions.hlsli">
       <Filter>Shaders\PBR</Filter>
     </None>
+    <None Include="DetailNormalHelpers.hlsli">
+      <Filter>Shaders\PBR</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Shaders">
