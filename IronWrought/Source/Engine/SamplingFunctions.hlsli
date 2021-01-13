@@ -5,8 +5,7 @@ PixelOutPut PixelShader_Color(VertexToPixel input)
 {
     PixelOutPut output;
     float4 color = colorTexture.Sample(defaultSampler, input.myUV.xy).rgba;
-	//color.rgb = GammaToLinear(color.rgb);
-	//color.rgb = LinearToGamma(color.rgb);
+	color.rgb = GammaToLinear(color.rgb);
 	output.myColor.rgb = color;
 	output.myColor.a = color.a;
     return output;
@@ -19,7 +18,7 @@ PixelOutPut PixelShader_Normal(VertexToPixel input)
     normal.z = 0.0f;
     normal = (normal * 2.0f) - 1.0f;
     normal.z = sqrt(1 - saturate((normal.x * normal.x) + (normal.y * normal.y)));
-   // normal = (normal * 0.5f) + 0.5f;
+    //normal = (normal * 0.5f) + 0.5f;// Found in TGA modelviewer shader code, but seems to cause issues here.
     normal = normalize(normal);
 
     float3x3 tangentSpaceMatrix = float3x3(normalize(input.myTangent.xyz), normalize(input.myBiNormal.xyz), normalize(input.myNormal.xyz));
