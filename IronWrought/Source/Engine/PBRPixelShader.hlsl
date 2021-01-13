@@ -45,8 +45,10 @@ PixelOutPut main(VertexToPixel input)
     
     float3 specularcolor = lerp((float3) 0.04, color.rgb, metalness);
     float3 diffusecolor = lerp((float3) 0.00, color.rgb, 1 - metalness);
+    //float3 diffusecolor = color;
     
-    float3 ambience = EvaluateAmbience(environmentTexture, normal, input.myNormal.xyz, toEye, perceptualroughness, metalness, color.rgb, ambientocclusion, diffusecolor, specularcolor);
+    float3 ambience = EvaluateAmbience(environmentTexture, normal, normalize(input.myNormal.xyz), toEye, perceptualroughness, metalness, color.
+    rgb, ambientocclusion, diffusecolor, specularcolor);
     float3 directionallight = EvaluateDirectionalLight(diffusecolor, specularcolor, normal, perceptualroughness, directionalLightColor.xyz, toDirectionalLight.xyz, toEye.xyz);
     directionallight *= directionalLightColor.w;
  
@@ -58,14 +60,13 @@ PixelOutPut main(VertexToPixel input)
     }
     
     float3 emissive = color * emissivedata;
-    float3 radiance = ambience + directionallight + pointLights + emissive;
+    float3 radiance = ambience /*+ directionallight*/ /* + pointLights + emissive*/;
    
-    output.myColor.rgb = LinearToGamma(radiance);// original
-    //output.myColor.rgb = GammaToLinear(radiance);
+    output.myColor.rgb = LinearToGamma(radiance); // original
     output.myColor.a = color.w;
     
     
-   // output.myColor.rgb = color;
+    //output.myColor.rgb = normalize(input.myNormal.xyz);
     
     return output;
 }
