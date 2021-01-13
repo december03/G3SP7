@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Game.h"
 #include "InGameState.h"
+#include "../Includes/PhysX-4.1/physx/include/PxActor.h"
 
 //#include "MainSingleton.h"
 //#include "PostMaster.h"
@@ -24,6 +25,9 @@ void CGame::Init()
 {
 	InitDev();
 	//InitRealGame();
+	physx::PxActor* actor;
+	actor;
+	physx.Init();
 }
 
 bool CGame::Update()

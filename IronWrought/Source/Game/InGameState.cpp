@@ -27,11 +27,12 @@
 CInGameState::CInGameState(CStateStack& aStateStack, const CStateStack::EState aState)
 	: CState(aStateStack, aState),
 	myExitLevel(false)
-{}
+{
+}
 
 CInGameState::~CInGameState()
 {
-}
+ }
 
 void CInGameState::Awake()
 {
