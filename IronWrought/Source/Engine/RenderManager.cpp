@@ -11,6 +11,8 @@
 #include "InstancedModelComponent.h"
 #include "MainSingleton.h"
 #include "PopupTextService.h"
+#include "DialogueSystem.h"
+
 #include "Engine.h"
 #include "Scene.h"
 

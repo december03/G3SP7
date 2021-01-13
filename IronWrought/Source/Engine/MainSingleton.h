@@ -1,8 +1,9 @@
 #pragma once
-#include "PostMaster.h"
-#include "CollisionManager.h"
-#include "PopupTextService.h"
-#include "DialogueSystem.h"
+
+class CPostMaster;
+class CCollisionManager;
+class CDialogueSystem;
+class CPopupTextService;
 
 class CMainSingleton
 {
@@ -17,10 +18,10 @@ public:
 private:
 	static CMainSingleton* ourInstance;
 
-	CPostMaster			myPostMaster;
-	CCollisionManager	myCollisionManager;
-	CPopupTextService	myPopupTextService;
-	CDialogueSystem		myDialogueSystem;
+	CPostMaster*			myPostMaster;
+	CCollisionManager*	myCollisionManager;
+	CPopupTextService*	myPopupTextService;
+	CDialogueSystem*		myDialogueSystem;
 
 private:
 	CMainSingleton();
