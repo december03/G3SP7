@@ -180,6 +180,10 @@ void CForwardRenderer::Render(CEnvironmentLight* anEnvironmentLight, std::vector
 
 		myContext->PSSetConstantBuffers(1, 1, &myObjectBuffer);
 		myContext->PSSetShaderResources(1, 3, &modelData.myTexture[0]);
+		if (modelData.myHasDetailNormals)
+		{
+			myContext->PSSetShaderResources(4, 1, &modelData.myDetailNormals[0]);
+		}
 		myContext->PSSetSamplers(0, 1, &modelData.mySamplerState);
 
 		// Toggling render passes

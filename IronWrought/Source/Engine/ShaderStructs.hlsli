@@ -4,6 +4,7 @@ TextureCube environmentTexture : register(t0);
 Texture2D colorTexture : register(t1); //sRGB: RGB-A = Color
 Texture2D materialTexture : register(t2); //Linear: R = Metalness, G = Roughness, B = Emissive, A = Strength
 Texture2D normalTexture : register(t3); //Linear: R = null, G = Normal.y, B = AmbientOcclusion, A = Normal.x
+Texture2D detailNormals[4] : register(t4);
 
 SamplerState defaultSampler : register(s0);
 

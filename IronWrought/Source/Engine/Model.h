@@ -21,6 +21,9 @@ public:
 		std::array<ID3D11ShaderResourceView*, 3> myTexture { };
 		//ID3D11Buffer* myBonesBuffer = nullptr;
 		//std::vector<CAnimation*> myAnimations;
+
+		std::array<ID3D11ShaderResourceView*, 4> myDetailNormals { nullptr, nullptr, nullptr, nullptr };
+		bool myHasDetailNormals;
 	};
 
 	struct SModelInstanceData {
@@ -36,7 +39,10 @@ public:
 		ID3D11SamplerState* mySamplerState = nullptr;
 		D3D11_PRIMITIVE_TOPOLOGY myPrimitiveTopology;
 		ID3D11InputLayout* myInputLayout = nullptr;
-		std::array<ID3D11ShaderResourceView*, 3> myTexture{ };
+		std::array<ID3D11ShaderResourceView*, 3> myTexture { };
+
+		std::array<ID3D11ShaderResourceView*, 4> myDetailNormals { nullptr, nullptr, nullptr, nullptr };
+		bool myHasDetailNormals;
 	};
 
 	struct SInstanceType {

@@ -463,6 +463,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="DetailNormalHelpers.hlsli" />
     <None Include="FullscreenShaderStructs.hlsli" />
     <None Include="LineShaderStructs.hlsli" />
     <None Include="MathHelpers.hlsli" />

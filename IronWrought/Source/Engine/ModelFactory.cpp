@@ -149,6 +149,8 @@ CModel* CModelFactory::LoadModel(std::string aFilePath)
 	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
 	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
 	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MaxLOD = 10;
 
 	ENGINE_HR_MESSAGE(myEngine->myFramework->GetDevice()->CreateSamplerState(&samplerDesc, &sampler), "Sampler State could not be created.");
 
@@ -195,6 +197,7 @@ CModel* CModelFactory::LoadModel(std::string aFilePath)
 	}											
 	// ! Check if model uses trimsheet
 
+
 	ID3D11ShaderResourceView* diffuseResourceView = GetShaderResourceView(device, /*TexturePathWide*/(modelDirectoryAndName + "_D.dds"));
 	ID3D11ShaderResourceView* materialResourceView = GetShaderResourceView(device, /*TexturePathWide*/(modelDirectoryAndName + "_M.dds"));
 	ID3D11ShaderResourceView* normalResourceView = GetShaderResourceView(device, /*TexturePathWide*/(modelDirectoryAndName + "_N.dds"));
@@ -224,15 +227,23 @@ CModel* CModelFactory::LoadModel(std::string aFilePath)
 	modelData.myTexture[1] = materialResourceView;
 	modelData.myTexture[2] = normalResourceView;
 
-	//if (mesh->myModel->myNumBones > 0)
-	//{
-	//	modelData.myBonesBuffer = bonesBuffer;
-	//}
-	//modelData.myAnimations
+	// "model_name_ts1_dn1.fbx" // What do if?
+	// "dn1_model_name_ts1.fbx
+	// "model_name_ts1_dn.fbx"
+	// _123 = har tilesheet nr2 och detailnormal nr3
+	// (int)'c'
 
-	//modelData.myTexture[3] = roughnessShaderResourceView;
-	//modelData.myTexture[4] = ambientShaderResourceView;
-	//modelData.myTexture[5] = emissiveShaderResourceView;
+	// Check for detail normal
+	ID3D11ShaderResourceView* detailNormal1 = nullptr;
+	std::string dnsuffix = aFilePath.substr(aFilePath.length() - 7, 3);
+	if (dnsuffix == "_dn")
+	{
+		modelData.myHasDetailNormals = true;
+		//detailNormal1 = GetShaderResourceView(device, "Assets/3D/Exempel_Modeller/DetailNormals/Tufted_Leather/dn_25cm_N.dds");
+		detailNormal1 = GetShaderResourceView(device, "Assets/3D/Exempel_Modeller/DetailNormals/4DN/dns/dn_CarbonFibre_n.dds");
+	}
+	// ! Check for detail norma
+	modelData.myDetailNormals[0] = detailNormal1;
 
 	model->Init(modelData);
 
@@ -406,6 +417,9 @@ CModel* CModelFactory::CreateInstancedModels(std::string aFilePath, int aNumberO
 	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
 	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
 	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MaxLOD = 10;
+
 
 	ENGINE_HR_MESSAGE(myEngine->myFramework->GetDevice()->CreateSamplerState(&samplerDesc, &sampler), "Sampler State could not be created.");
 
