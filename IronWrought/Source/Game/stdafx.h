@@ -1,19 +1,20 @@
 #pragma once
-#include "Game.h"
-#include "Engine.h"
-#include "Scene.h"
-
+//C++
 #include <iostream>
 #include <d3d11.h>
-#include <SimpleMath.h>
-
 #include <map>
 #include <string>
 #include <array>
 
+//DirectXTK
+#include <SimpleMath.h>
+using namespace DirectX::SimpleMath;
+
+//Utility
 #include "Timer.h"
 
+//Engine
+#include "Engine.h"
 #include "Input.h"
 #include "MainSingleton.h"
-
-using namespace DirectX::SimpleMath;
+//#include "Scene.h"
