@@ -18,7 +18,7 @@
 #include "MainSingleton.h"
 #include "InputMapper.h"
 
-#include "CameraComponent.h"
+#include <CollisionManager.h>
 
 #include <iostream>
 

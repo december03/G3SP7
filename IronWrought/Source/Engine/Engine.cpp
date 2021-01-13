@@ -26,6 +26,8 @@
 #include <wincodec.h>
 #include "DL_Debug.h"
 #include "MainSingleton.h"
+#include <DialogueSystem.h>
+#include <PopupTextService.h>
 #include "AudioManager.h"
 #include <string>
 
