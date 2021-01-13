@@ -17,7 +17,7 @@
 #include <algorithm>
 
 CRenderManager::CRenderManager() /*: myScene(*CScene::GetInstance())*/
-	: myUseBloom(false)
+	: myUseBloom(true)
 	, myClearColor(0.8f, 0.5f, 0.5f, 1.0f)
 {
 }
@@ -189,7 +189,6 @@ void CRenderManager::Render(CScene& aScene)
 			instancedGameObjects.emplace_back(instance);
 		}
 	}
-	std::cout << std::endl;
 
 	std::sort(indicesOfOutlineModels.begin(), indicesOfOutlineModels.end(), [](UINT a, UINT b) { return a > b; });
 
